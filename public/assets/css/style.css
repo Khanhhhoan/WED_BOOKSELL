@@ -138,28 +138,12 @@ img {
     object-position: center;
 }
 
-/* Footer Cao Cấp & Chuyên Nghiệp */
+/* Footer Cao Cấp & Đồng Bộ Tone Xanh Rừng (Forest Green) */
 .site-footer {
-    background: #0f172a;
-    color: #94a3b8;
+    background: linear-gradient(180deg, #164639 0%, #0f3329 100%);
+    color: rgba(255, 255, 255, 0.8);
     position: relative;
-    border-top: 3px solid #1a5f4a;
-}
-
-.footer-features {
-    background: rgba(15, 23, 42, 0.95);
-}
-
-.feature-icon-box {
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.feature-icon-box:hover {
-    transform: scale(1.1);
-    background-color: rgba(26, 95, 74, 0.25) !important;
+    border-top: 3px solid #287a62;
 }
 
 .footer-heading {
@@ -176,12 +160,12 @@ img {
     left: 0;
     width: 28px;
     height: 2px;
-    background-color: #10b981;
+    background-color: #34d399;
     border-radius: 2px;
 }
 
 .footer-links a {
-    color: #94a3b8;
+    color: rgba(255, 255, 255, 0.72);
     text-decoration: none;
     font-size: 0.92rem;
     transition: all 0.2s ease;
@@ -197,8 +181,8 @@ img {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -208,18 +192,14 @@ img {
 }
 
 .social-btn:hover {
-    background-color: #1a5f4a;
+    background-color: #287a62;
     color: #ffffff;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(26, 95, 74, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .footer-bottom {
-    background-color: #0b1120;
-}
-
-.hover-white:hover {
-    color: #ffffff !important;
+    background-color: #0b241c;
 }
 
 /* Danh mục trang sản phẩm: mục đang chọn — đen (Bootstrap 5 dùng biến CSS, cần ghi đè cả) */
