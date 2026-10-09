@@ -162,9 +162,11 @@
 <script>
 (function() {
     var orderId = <?php echo (int)$data['orderId'] ?>;
-    var checkUrl = "<?php echo BASE_URL ?>sepay/check_status/" + orderId;
-    var successUrl = "<?php echo BASE_URL ?>order/success/" + orderId;
+    var baseUrl = "<?php echo rtrim(BASE_URL, '/') ?>";
+    var checkUrl = baseUrl + "/sepay/check_status/" + orderId;
+    var successUrl = baseUrl + "/order/success/" + orderId;
     var isChecking = false;
+    var isCompleted = false;
     var pollInterval = null;
     var remainingSeconds = 15 * 60; // 15 phút
 
@@ -195,7 +197,7 @@
         if (toast) {
             toast.show();
         } else {
-            alert('Đã sao chép: ' + textToCopy);
+            alert('Đã sao chép vào bộ nhớ tạm!');
         }
     }
 
@@ -215,9 +217,29 @@
         }
     }, 1000);
 
-    // Hàm gọi API kiểm tra trạng thái
+    // Âm thanh chuông báo thành công (Web Audio API không cần tải file ngoài)
+    function playSuccessChime() {
+        try {
+            var AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            var ctx = new AudioCtx();
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+            osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12); // A5
+            gain.gain.setValueAtTime(0.25, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.45);
+        } catch(e) {}
+    }
+
+    // Hàm gọi API kiểm tra trạng thái tự động
     function checkPaymentStatus(isManual) {
-        if (isChecking) return;
+        if (isChecking || isCompleted) return;
         isChecking = true;
 
         var manualIcon = document.getElementById('manualCheckIcon');
@@ -237,7 +259,7 @@
                 try {
                     var res = JSON.parse(xhr.responseText);
                     if (res && res.paid === true) {
-                        // Thành công!
+                        isCompleted = true;
                         clearInterval(pollInterval);
                         clearInterval(timerInterval);
                         onPaymentSuccess();
@@ -261,6 +283,8 @@
 
     // Xử lý khi thanh toán thành công
     function onPaymentSuccess() {
+        playSuccessChime();
+
         var overlay = document.getElementById('paymentSuccessOverlay');
         if (overlay) {
             overlay.classList.remove('d-none');
@@ -271,16 +295,26 @@
             statusBox.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i><span class="small fw-bold">Đã nhận được thanh toán!</span>';
         }
 
-        // Tự động chuyển hướng về trang hoàn tất đơn sau 1.5 giây
+        // Tự động chuyển hướng về trang hoàn tất đơn sau 1.5 giây mà không cần bấm F5
         setTimeout(function() {
             window.location.href = successUrl;
         }, 1500);
     }
 
-    // Polling tự động mỗi 3 giây
+    // Polling tự động cực nhanh mỗi 2 giây
     pollInterval = setInterval(function() {
         checkPaymentStatus(false);
-    }, 3000);
+    }, 2000);
+
+    // Kích hoạt kiểm tra ngay khi khách quay lại tab trình duyệt từ App ngân hàng
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            checkPaymentStatus(false);
+        }
+    });
+    window.addEventListener('focus', function() {
+        checkPaymentStatus(false);
+    });
 
     // Nút bấm kiểm tra thủ công
     var btnManual = document.getElementById('btnManualCheck');
