@@ -9,12 +9,12 @@ services:
       - key: BASE_URL
         value: /
       - key: DB_HOST
-        sync: false
+        value: mysql-242c21d4-khanhhoan121209-543d.j.aivencloud.com
+      - key: DB_PORT
+        value: "12799"
       - key: DB_USER
-        sync: false
+        value: avnadmin
       - key: DB_PASS
         sync: false
       - key: DB_NAME
-        sync: false
-      - key: DB_PORT
-        value: "3306"
+        value: defaultdb
