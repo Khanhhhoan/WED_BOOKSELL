@@ -1,9 +1,9 @@
 <div class="mb-5">
-    <h2 class="fw-bold mb-4"><i class="fas fa-shopping-cart text-primary me-2"></i>Giỏ Hàng Của Bạn</h2>
+    <h2 class="fw-bold mb-4">Giỏ Hàng Của Bạn</h2>
 
     <?php if (empty($data['cart'])) : ?>
         <div class="alert alert-info shadow-sm p-4 text-center">
-            <h4 class="alert-heading mb-3"><i class="fas fa-box-open fa-2x mb-2 d-block"></i>Giỏ hàng trống</h4>
+            <h4 class="alert-heading mb-3">Giỏ hàng trống</h4>
             <p>Bạn chưa thêm sản phẩm nào vào giỏ hàng.</p>
             <a href="<?php echo  BASE_URL ?>book" class="btn btn-primary mt-2">Tiếp tục mua sắm</a>
         </div>
@@ -28,7 +28,7 @@
                                         <tr>
                                             <td class="ps-4">
                                                 <div class="d-flex align-items-center">
-                                                    <img src="<?php echo  $item['image'] ? BASE_URL . 'assets/images/' . $item['image'] : 'https://placehold.co/400x600?text=Book' ?>" alt="Book" class="rounded me-3" style="width: 60px; height: 80px; object-fit: cover;">
+                                                    <img src="<?php echo htmlspecialchars(book_image_url(isset($item['image']) ? $item['image'] : ''), ENT_QUOTES, 'UTF-8'); ?>" alt="Book" class="rounded me-3" style="width: 60px; height: 80px; object-fit: cover;">
                                                     <div>
                                                         <a href="<?php echo  BASE_URL ?>book/detail/<?php echo  $id ?>" class="text-decoration-none fw-bold text-dark text-truncate d-block" style="max-width: 200px;"><?php echo  htmlspecialchars($item['title']) ?></a>
                                                     </div>
@@ -44,15 +44,15 @@
                                                 <?php echo  number_format($item['price'] * $item['quantity'], 0, ',', '.') ?> đ
                                             </td>
                                             <td class="text-center pe-4">
-                                                <a href="<?php echo  BASE_URL ?>cart/remove/<?php echo  $id ?>" class="text-danger p-2" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash-alt"></i></a>
+                                                <a href="<?php echo  BASE_URL ?>cart/remove/<?php echo  $id ?>" class="text-danger p-2 small" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                             <div class="card-footer bg-white p-3 d-flex justify-content-between align-items-center">
-                                <a href="<?php echo  BASE_URL ?>cart/clear" class="btn btn-sm btn-outline-danger" onclick="return confirm('Xóa toàn bộ giỏ hàng?')"><i class="fas fa-times me-1"></i>Xóa tất cả</a>
-                                <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-sync-alt me-1"></i>Cập nhật giỏ hàng</button>
+                                <a href="<?php echo  BASE_URL ?>cart/clear" class="btn btn-sm btn-outline-danger" onclick="return confirm('Xóa toàn bộ giỏ hàng?')">Xóa tất cả</a>
+                                <button type="submit" class="btn btn-sm btn-secondary">Cập nhật giỏ hàng</button>
                             </div>
                         </form>
                     </div>
@@ -62,7 +62,7 @@
             <div class="col-lg-4">
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-primary text-white p-3">
-                        <h5 class="card-title mb-0"><i class="fas fa-receipt me-2"></i>Tóm tắt đơn hàng</h5>
+                        <h5 class="card-title mb-0">Tóm tắt đơn hàng</h5>
                     </div>
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between mb-3">
@@ -80,16 +80,15 @@
                         </div>
                         
                         <?php if (Session::isLoggedIn()) : ?>
-                            <a href="<?php echo  BASE_URL ?>order/checkout" class="btn btn-success btn-lg w-100 shadow-sm"><i class="fas fa-check-circle me-2"></i>Tiến Hành Thanh Toán</a>
+                            <a href="<?php echo  BASE_URL ?>order/checkout" class="btn btn-success btn-lg w-100 shadow-sm">Tiến Hành Thanh Toán</a>
                         <?php else : ?>
                             <div class="alert alert-warning p-3 mb-0 text-center small">
-                                <i class="fas fa-info-circle mb-2 fa-lg d-block"></i>
                                 Bạn cần <a href="<?php echo  BASE_URL ?>auth/login" class="fw-bold">đăng nhập</a> để thanh toán
                             </div>
                         <?php endif; ?>
                     </div>
                 </div>
-                <a href="<?php echo  BASE_URL ?>book" class="btn btn-outline-primary w-100 mt-3"><i class="fas fa-arrow-left me-2"></i>Tiếp tục mua hàng</a>
+                <a href="<?php echo  BASE_URL ?>book" class="btn btn-outline-primary w-100 mt-3">Tiếp tục mua hàng</a>
             </div>
         </div>
     <?php endif; ?>

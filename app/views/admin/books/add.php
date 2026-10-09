@@ -3,13 +3,13 @@
         <h2 class="fw-bold">Thêm Sách Mới</h2>
     </div>
     <div class="col-md-6 text-end">
-        <a href="<?php echo BASE_URL; ?>admin/books" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i>Quay lại</a>
+        <a href="<?php echo BASE_URL; ?>admin/books" class="btn btn-secondary">Quay lại</a>
     </div>
 </div>
 
 <div class="card shadow border-0">
     <div class="card-body p-4">
-        <form action="<?php echo BASE_URL; ?>admin/book_add" method="POST">
+        <form action="<?php echo BASE_URL; ?>admin/book_add" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold">Tên Sách</label>
@@ -40,14 +40,19 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label fw-bold">Tên file ảnh (VD: sach-hay.jpg)</label>
-                <input type="text" class="form-control" name="image">
+                <label class="form-label fw-bold">Ảnh bìa (tùy chọn)</label>
+                <input type="file" class="form-control" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">
+                <small class="text-muted d-block mt-1">Chọn ảnh từ máy — hệ thống tự đặt tên file và lưu vào <code>public/assets/images/</code>. Không cần trùng tên với database.</small>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Mô tả nội dung</label>
                 <textarea class="form-control" name="description" rows="5"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Lưu Sách</button>
+            <div class="mb-4 form-check">
+                <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" checked>
+                <label class="form-check-label" for="is_active">Hiển thị trên cửa hàng</label>
+            </div>
+            <button type="submit" class="btn btn-dark">Lưu Sách</button>
         </form>
     </div>
 </div>

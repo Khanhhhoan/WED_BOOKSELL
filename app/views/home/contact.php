@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="card shadow border-0">
             <div class="card-header bg-primary text-white p-4">
-                <h3 class="mb-0"><i class="fas fa-envelope me-2"></i>Liên Hệ Với Chúng Tôi</h3>
+                <h3 class="mb-0">Liên Hệ Với Chúng Tôi</h3>
             </div>
             <div class="card-body p-4">
                 <p class="text-muted mb-4">Nếu bạn có bất kỳ thắc mắc nào, vui lòng điền vào form bên dưới. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
@@ -29,7 +29,7 @@
                         <textarea class="form-control" id="message" rows="5" placeholder="Bạn cần hỗ trợ điều gì?" required></textarea>
                     </div>
                     
-                    <button type="button" class="btn btn-primary" onclick="alert('Cảm ơn bạn đã liên hệ! Tính năng Gửi Email đang được thử nghiệm.');"><i class="fas fa-paper-plane me-2"></i>Gửi Tin Nhắn</button>
+                    <button type="button" class="btn btn-primary" onclick="alert('Cảm ơn bạn đã liên hệ! Tính năng Gửi Email đang được thử nghiệm.');">Gửi Tin Nhắn</button>
                 </form>
             </div>
         </div>

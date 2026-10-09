@@ -2,9 +2,8 @@
 class OrderController extends Controller {
     
     public function __construct() {
-        // Ch? cho ph�p user dang nh?p v�o Order
         if (!Session::isLoggedIn()) {
-            Session::flash('error', 'B?n c?n dang nh?p d? th?c hi?n ch?c nang n�y.');
+            Session::flash('error', 'Bạn cần đăng nhập để thực hiện chức năng này.');
             $this->redirect('auth/login');
         }
     }
@@ -14,11 +13,20 @@ class OrderController extends Controller {
             $this->redirect('cart');
         }
 
-        // N?u submit form thanh to�n
+        // Gửi form thanh toán
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $cart = $_SESSION['cart'];
+            $bookModel = $this->model('BookModel');
+            foreach ($cart as $bookId => $item) {
+                $b = $bookModel->getBookById($bookId, true);
+                if (!$b || (int) $b['stock'] < (int) $item['quantity']) {
+                    Session::flash('error', 'Giỏ hàng có sách không còn bán hoặc không đủ tồn kho. Vui lòng cập nhật giỏ hàng.');
+                    $this->redirect('cart');
+                }
+            }
+
             $total = 0;
             foreach ($cart as $item) {
                 $total += $item['price'] * $item['quantity'];
@@ -34,9 +42,8 @@ class OrderController extends Controller {
                 'payment_method' => $_POST['payment_method'], // cod or online
             );
 
-            // Validate don gi?n
             if (empty($data['shipping_name']) || empty($data['shipping_phone']) || empty($data['shipping_address'])) {
-                Session::flash('error', 'Vui l�ng di?n d?y d? th�ng tin giao h�ng.');
+                Session::flash('error', 'Vui lòng điền đầy đủ thông tin giao hàng.');
                 $this->redirect('order/checkout');
             }
 
@@ -44,18 +51,21 @@ class OrderController extends Controller {
             $orderId = $orderModel->createOrder($data);
 
             if ($orderId) {
-                // X�a gi? h�ng
                 unset($_SESSION['cart']);
-                
-                // Chuy?n t?i trang th�nh c�ng
-                Session::flash('msg', '�?t h�ng th�nh c�ng! M� don h�ng c?a b?n l� <strong>#ORD' . $orderId . '</strong>');
-                $this->redirect('order/success/' . $orderId);
+
+                if ($data['payment_method'] === 'sepay' || $data['payment_method'] === 'online') {
+                    Session::flash('msg', 'Đơn hàng <strong>#ORD' . $orderId . '</strong> đã khởi tạo! Vui lòng quét mã QR để chuyển khoản thanh toán.');
+                    $this->redirect('sepay/pay/' . $orderId);
+                } else {
+                    Session::flash('msg', 'Đặt hàng thành công! Mã đơn hàng của bạn là <strong>#ORD' . $orderId . '</strong>');
+                    $this->redirect('order/success/' . $orderId);
+                }
             } else {
-                Session::flash('error', '�� x?y ra l?i h? th?ng, vui l�ng th? l?i.');
+                Session::flash('error', 'Đã xảy ra lỗi hệ thống, vui lòng thử lại.');
                 $this->redirect('order/checkout');
             }
         } 
-        // Hi?n th? form checkout
+        // Form checkout
         else {
             $cart = $_SESSION['cart'];
             $total = 0;
@@ -67,7 +77,7 @@ class OrderController extends Controller {
             $userInfo = $userModel->getUserById($_SESSION['user_id']);
 
             $data = array(
-                'title' => 'Thanh To�n �on H�ng - BookStore',
+                'title' => 'Thanh toán đơn hàng - BookStore',
                 'cart' => $cart,
                 'total' => $total,
                 'user' => $userInfo
@@ -80,9 +90,18 @@ class OrderController extends Controller {
     }
 
     public function success($orderId = '') {
+        $orderModel = $this->model('OrderModel');
+        $payment = $orderModel->getPaymentByOrderId($orderId);
+        $order = null;
+        if (!empty($orderId)) {
+            $order = $orderModel->getOrderByIdAdmin($orderId);
+        }
+
         $data = array(
-            'title' => '�?t H�ng Th�nh C�ng',
-            'orderId' => $orderId
+            'title' => 'Đặt hàng thành công',
+            'orderId' => $orderId,
+            'payment' => $payment,
+            'order' => $order
         );
         
         $this->view('layouts/header', $data);
@@ -95,7 +114,7 @@ class OrderController extends Controller {
         $orders = $orderModel->getOrdersByUser($_SESSION['user_id']);
 
         $data = array(
-            'title' => 'L?ch S? �on H�ng - BookStore',
+            'title' => 'Lịch sử đơn hàng - BookStore',
             'orders' => $orders
         );
 

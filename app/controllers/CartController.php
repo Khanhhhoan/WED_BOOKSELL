@@ -1,5 +1,13 @@
 <?php
 class CartController extends Controller {
+
+    public function __construct() {
+        if (!Session::isLoggedIn()) {
+            Session::flash('error', 'Vui lòng đăng nhập để sử dụng giỏ hàng và đặt hàng.');
+            $this->redirect('auth/login');
+        }
+    }
+
     public function index() {
         $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
         $total = 0;
@@ -9,7 +17,7 @@ class CartController extends Controller {
         }
 
         $data = array(
-            'title' => 'Gi? H�ng C?a B?n - BookStore',
+            'title' => 'Giỏ hàng của bạn - BookStore',
             'cart' => $cart,
             'total' => $total
         );
@@ -22,17 +30,17 @@ class CartController extends Controller {
     public function add($id) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') {
             $bookModel = $this->model('BookModel');
-            $book = $bookModel->getBookById($id);
+            $book = $bookModel->getBookById($id, true);
 
             if ($book) {
-                // Kh?i t?o gi? h�ng n?u chua c�
+                // Khởi tạo giỏ hàng nếu chưa có
                 if (!isset($_SESSION['cart'])) {
                     $_SESSION['cart'] = array();
                 }
 
                 $qty = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 
-                // Ki?m tra xem s?n ph?m d� c� trong gi? h�ng chua
+                // Kiểm tra sản phẩm đã có trong giỏ chưa
                 if (isset($_SESSION['cart'][$id])) {
                     $_SESSION['cart'][$id]['quantity'] += $qty;
                 } else {
@@ -45,9 +53,9 @@ class CartController extends Controller {
                     );
                 }
 
-                Session::flash('msg', '�� th�m <strong>' . htmlspecialchars($book['title']) . '</strong> v�o gi? h�ng!');
+                Session::flash('msg', 'Đã thêm <strong>' . htmlspecialchars($book['title']) . '</strong> vào giỏ hàng!');
                 
-                // N?u l� t? form (post) th� v? gi? h�ng, n?u get th� tu?
+                // POST → về giỏ; GET → quay lại trang trước
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $this->redirect('cart');
                 } else {
@@ -57,7 +65,7 @@ class CartController extends Controller {
                     exit;
                 }
             } else {
-                Session::flash('error', 'S?n ph?m kh�ng t?n t?i!');
+                Session::flash('error', 'Sản phẩm không tồn tại hoặc đã ngừng bán.');
                 $this->redirect('book');
             }
         }
@@ -65,7 +73,7 @@ class CartController extends Controller {
 
     public function update() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $quantities = $_POST['quantity']; // M?ng ch?a ID v� quantity m?i
+            $quantities = $_POST['quantity']; // mảng id => số lượng
             
             if (isset($_SESSION['cart']) && !empty($quantities)) {
                 foreach ($quantities as $id => $qty) {
@@ -75,7 +83,7 @@ class CartController extends Controller {
                         unset($_SESSION['cart'][$id]);
                     }
                 }
-                Session::flash('msg', 'Gi? h�ng d� du?c c?p nh?t.');
+                Session::flash('msg', 'Giỏ hàng đã được cập nhật.');
             }
         }
         $this->redirect('cart');
@@ -84,7 +92,7 @@ class CartController extends Controller {
     public function remove($id) {
         if (isset($_SESSION['cart'][$id])) {
             unset($_SESSION['cart'][$id]);
-            Session::flash('msg', '�� x�a s?n ph?m kh?i gi? h�ng.');
+            Session::flash('msg', 'Đã xóa sản phẩm khỏi giỏ hàng.');
         }
         $this->redirect('cart');
     }
@@ -92,7 +100,7 @@ class CartController extends Controller {
     public function clear() {
         if (isset($_SESSION['cart'])) {
             unset($_SESSION['cart']);
-            Session::flash('msg', '�� x�a to�n b? gi? h�ng.');
+            Session::flash('msg', 'Đã xóa toàn bộ giỏ hàng.');
         }
         $this->redirect('cart');
     }

@@ -1,10 +1,10 @@
 <div class="mb-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold"><i class="fas fa-newspaper text-primary me-2"></i>Quản Lý Bài Viết</h2>
-        <a href="<?php echo BASE_URL; ?>admin/post_add" class="btn btn-primary"><i class="fas fa-plus me-1"></i>Thêm Bài Viết Mới</a>
+        <h2 class="fw-bold text-dark">Quản Lý Bài Viết</h2>
+        <a href="<?php echo BASE_URL; ?>admin/post_add" class="btn btn-outline-secondary btn-sm">Thêm Bài Viết Mới</a>
     </div>
 
-    <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -25,19 +25,19 @@
                                 <tr>
                                     <td class="ps-4 fw-bold text-muted">#<?php echo  $post['id'] ?></td>
                                     <td>
-                                        <img src="<?php echo  $post['image'] ? BASE_URL . 'assets/images/posts/' . $post['image'] : 'https://placehold.co/100x70' ?>" class="rounded" style="width: 80px; height: 50px; object-fit: cover;">
+                                        <img src="<?php echo htmlspecialchars(post_image_url(isset($post['image']) ? $post['image'] : ''), ENT_QUOTES, 'UTF-8'); ?>" class="rounded shadow-sm" style="width: 80px; height: 50px; object-fit: cover;">
                                     </td>
                                     <td>
                                         <div class="fw-bold text-dark text-truncate" style="max-width: 300px;" title="<?php echo  htmlspecialchars($post['title']) ?>">
                                             <?php echo  htmlspecialchars($post['title']) ?>
                                         </div>
                                     </td>
-                                    <td><small class="text-muted"><i class="far fa-calendar-alt me-1"></i><?php echo  date('d/m/Y', strtotime($post['created_at'])) ?></small></td>
+                                    <td><small class="text-muted"><?php echo  date('d/m/Y', strtotime($post['created_at'])) ?></small></td>
                                     <td class="text-center">
-                                        <a href="<?php echo BASE_URL; ?>admin/post_edit/<?php echo $post['id']; ?>" class="btn btn-sm btn-info text-white me-1" title="Sửa"><i class="fas fa-edit"></i></a>
+                                        <a href="<?php echo BASE_URL; ?>admin/post_edit/<?php echo $post['id']; ?>" class="btn btn-sm btn-outline-secondary me-1" title="Sửa">Sửa</a>
                                         
                                         <form action="<?php echo  BASE_URL ?>admin/post_delete/<?php echo  $post['id'] ?>" method="POST" class="d-inline-block">
-                                            <button type="submit" class="btn btn-sm btn-danger" title="Xóa" onclick="return confirm('Xóa bài viết này?');"><i class="fas fa-trash-alt"></i></button>
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa" onclick="return confirm('Xóa bài viết này?');">Xóa</button>
                                         </form>
                                     </td>
                                 </tr>

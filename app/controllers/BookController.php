@@ -2,14 +2,37 @@
 class BookController extends Controller {
     public function index() {
         $bookModel = $this->model('BookModel');
-        
-        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-        $books = $bookModel->getAllBooks($keyword);
-        
+
+        // Bóc tách toàn bộ tham số lọc từ GET
+        $filters = array(
+            'keyword' => isset($_GET['keyword']) ? trim((string) $_GET['keyword']) : '',
+            'category_id' => isset($_GET['category_id']) ? (int) $_GET['category_id'] : 0,
+            'author_id' => isset($_GET['author_id']) ? (int) $_GET['author_id'] : 0,
+            'price_range' => isset($_GET['price_range']) ? trim((string) $_GET['price_range']) : '',
+            'min_price' => (isset($_GET['min_price']) && is_numeric($_GET['min_price'])) ? (float) $_GET['min_price'] : '',
+            'max_price' => (isset($_GET['max_price']) && is_numeric($_GET['max_price'])) ? (float) $_GET['max_price'] : '',
+            'in_stock' => isset($_GET['in_stock']) ? (int) $_GET['in_stock'] : 0,
+            'sort' => isset($_GET['sort']) ? trim((string) $_GET['sort']) : 'newest',
+        );
+
+        // Lấy danh sách sách sau khi lọc (chỉ sách đang bán is_active = 1)
+        $books = $bookModel->getFilteredBooks($filters, true);
+
+        // Dữ liệu phục vụ bộ lọc
+        $categories = $bookModel->getCategoriesWithCount(true);
+        $authors = $bookModel->getAllAuthors();
+        $priceBounds = $bookModel->getPriceBounds(true);
+
         $data = array(
-            'title' => 'Danh sách Sản phẩm - BookStore',
+            'title' => 'Cửa Hàng Sách - Bộ Lọc & Tìm Kiếm',
             'books' => $books,
-            'keyword' => $keyword
+            'totalBooks' => count($books),
+            'filters' => $filters,
+            'categories' => $categories,
+            'authors' => $authors,
+            'priceBounds' => $priceBounds,
+            'keyword' => $filters['keyword'],
+            'category_id' => $filters['category_id'],
         );
         
         $this->view('layouts/header', $data);
@@ -23,7 +46,7 @@ class BookController extends Controller {
         }
 
         $bookModel = $this->model('BookModel');
-        $book = $bookModel->getBookById($id);
+        $book = $bookModel->getBookById($id, true);
 
         if (!$book) {
             $this->redirect('book');

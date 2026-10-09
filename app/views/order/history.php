@@ -6,12 +6,11 @@
         </ol>
     </nav>
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold"><i class="fas fa-file-invoice-dollar text-primary me-2"></i>Lịch Sử Đơn Hàng</h2>
+        <h2 class="fw-bold">Lịch Sử Đơn Hàng</h2>
     </div>
 
     <?php if (empty($data['orders'])) : ?>
         <div class="alert alert-info text-center shadow-sm p-5">
-            <i class="fas fa-clipboard-list fa-3x mb-3 text-secondary"></i>
             <h4>Bạn chưa có đơn hàng nào</h4>
             <p>Hãy bắt đầu mua sắm ngay hôm nay để nhận những cuốn sách hay nhất!</p>
             <a href="<?php echo  BASE_URL ?>book" class="btn btn-primary mt-3">Tiếp Tục Mua Sắm</a>
@@ -26,8 +25,9 @@
                             <th>Ngày đặt</th>
                             <th>Thông tin nhận hàng</th>
                             <th class="text-end">Tổng tiền</th>
-                            <th class="text-center">Trạng thái</th>
-                            <th class="pe-4 text-center">Chi tiết</th>
+                            <th class="text-center">Thanh toán</th>
+                            <th class="text-center">Trạng thái đơn</th>
+                            <th class="pe-4 text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,10 +37,26 @@
                                 <td><?php echo  date('d/m/Y H:i', strtotime($order['created_at'])) ?></td>
                                 <td>
                                     <strong><?php echo  htmlspecialchars($order['shipping_name']) ?></strong><br>
-                                    <small class="text-muted"><i class="fas fa-phone-alt me-1"></i><?php echo  htmlspecialchars($order['shipping_phone']) ?></small>
+                                    <small class="text-muted"><?php echo  htmlspecialchars($order['shipping_phone']) ?></small>
                                 </td>
                                 <td class="text-end fw-bold text-danger">
                                     <?php echo  number_format($order['total_amount'], 0, ',', '.') ?> đ
+                                </td>
+                                <td class="text-center">
+                                    <?php 
+                                    $pMethod = isset($order['payment_method']) ? $order['payment_method'] : 'cod';
+                                    $pStatus = isset($order['payment_status']) ? $order['payment_status'] : 'pending';
+
+                                    if ($pMethod === 'sepay' || $pMethod === 'online') {
+                                        if ($pStatus === 'success') {
+                                            echo '<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle me-1"></i> Đã thanh toán</span>';
+                                        } else {
+                                            echo '<span class="badge bg-warning-subtle text-warning border border-warning-subtle"><i class="bi bi-clock me-1"></i> Chờ chuyển khoản</span>';
+                                        }
+                                    } else {
+                                        echo '<span class="badge bg-secondary-subtle text-secondary border"><i class="bi bi-cash me-1"></i> COD (Tiền mặt)</span>';
+                                    }
+                                    ?>
                                 </td>
                                 <td class="text-center">
                                     <?php
@@ -59,7 +75,13 @@
                                     <span class="badge <?php echo  $badgeClass ?>"><?php echo  $statusText ?></span>
                                 </td>
                                 <td class="pe-4 text-center">
-                                    <button class="btn btn-sm btn-outline-primary" onclick="alert('Chức năng xem chi tiết đơn hàng đang được cập nhật...');"><i class="fas fa-eye"></i></button>
+                                    <?php if (($pMethod === 'sepay' || $pMethod === 'online') && $pStatus !== 'success' && $order['status'] !== 'cancelled') : ?>
+                                        <a href="<?php echo BASE_URL ?>sepay/pay/<?php echo $order['id'] ?>" class="btn btn-sm btn-danger shadow-sm">
+                                            <i class="bi bi-qr-code-scan me-1"></i> Trả ngay
+                                        </a>
+                                    <?php else : ?>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="alert('Đơn hàng #ORD<?php echo $order['id'] ?>: <?php echo htmlspecialchars($order['shipping_name']) ?> - <?php echo number_format($order['total_amount'], 0, ',', '.') ?> đ');">Xem</button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

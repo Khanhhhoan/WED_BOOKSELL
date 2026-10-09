@@ -14,11 +14,15 @@
   - Xem danh sách sản phẩm (Sách nổi bật, Sách mới, Lọc theo thể loại).
   - Có trang giới thiệu nội dung hoặc bài viết Tin tức (Blog).
   - Xem chi tiết từng quyển sách (Giá, tác giả, tồn kho, mô tả).
-  - Chức năng **Giỏ hàng** & Checkout đặt hàng (Hỗ trợ Mock Thanh toán Ví điện tử và COD).
-  - Yêu cầu đăng nhập để mua hàng và tra cứu lịch sử đơn hàng.
+  - Chức năng **Giỏ hàng** & Checkout đặt hàng (Hỗ trợ **Thanh toán chuyển khoản SePay thật qua VietQR 24/7** và COD).
+  - Giao diện thanh toán SePay động: Quét mã QR, tự động đồng bộ hóa xác nhận đơn hàng qua Webhook/Live Polling trong 3 giây.
+  - Tra cứu lịch sử đơn hàng và thanh toán trực tiếp các đơn chưa thanh toán.
 - **Quản trị viên (Admin):** 
-  - Bảng điều khiển (Dashboard) đo lường doanh thu và phân tích đơn hàng tĩnh.
+  - Bảng điều khiển (Dashboard) đo lường doanh thu và phân tích đơn hàng.
   - Phân hệ C-R-U-D 100% đầy đủ cho: **Sách, Danh mục, Đơn hàng, Bài Viết, Người dùng**.
+  - **Quản lý Log Thanh Toán SePay:** Bảng thống kê doanh thu SePay, chi tiết raw JSON Webhook, trạng thái giao dịch (thành công, trùng lặp, sai lệch tiền, không khớp đơn).
+  - **Cấu hình SePay:** Tùy biến thông tin ngân hàng nhận tiền, số tài khoản, mã API, tiền tố nội dung chuyển khoản.
+  - **Công cụ Giả lập / Test Webhook:** Kiểm thử luồng xác thực đơn hàng tự động ngay trên môi trường local.
 
 ---
 

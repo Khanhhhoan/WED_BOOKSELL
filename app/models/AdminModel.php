@@ -16,7 +16,7 @@ class AdminModel extends Model {
         $stats['total_revenue'] = $revenue ? $revenue : 0;
 
         // Tổng sách đang bán
-        $this->db->query("SELECT COUNT(*) as total FROM books");
+        $this->db->query("SELECT COUNT(*) as total FROM books WHERE is_active = 1");
         $res3 = $this->db->single();
         $stats['total_books'] = $res3['total'];
 

@@ -1,4 +1,16 @@
 /* Custom CSS styles */
+
+/*
+ * Màu chủ đề (thay màu xanh dương mặc định của Bootstrap).
+ * Đổi #1a5f4a và rgb tương ứng nếu muốn màu khác (ví dụ: #8b4513 nâu, #6b2d3c đỏ rượu).
+ */
+:root {
+    --bs-primary: #1a5f4a;
+    --bs-primary-rgb: 26, 95, 74;
+    --bs-link-color: #1a5f4a;
+    --bs-link-hover-color: #134436;
+}
+
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -8,19 +20,59 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 
+/* Đảm bảo hình ảnh không bao giờ tràn viền */
+img {
+    max-width: 100%;
+}
+
+/* Card Sản phẩm Sách - Cân đối, chuẩn khung, không tràn viền */
 .book-card {
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #eaedf1;
+    display: flex;
+    flex-direction: column;
 }
 
 .book-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+}
+
+/* Khung chứa ảnh bìa sách cố định chiều cao, căn giữa bìa chuẩn mực */
+.book-img-wrapper {
+    height: 240px;
+    width: 100%;
+    background-color: #f8fafc;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 12px;
+    position: relative;
+    border-bottom: 1px solid #f1f3f5;
 }
 
 .book-img {
-    height: 250px;
-    object-fit: cover;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: 216px;
+    object-fit: contain;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-img {
+    transform: scale(1.05);
 }
 
 .price-tag {
@@ -29,7 +81,153 @@ body {
     font-size: 1.2rem;
 }
 
+/* Card Bài viết / Tin tức */
+.post-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eaedf1;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: #fff;
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+}
+
+.post-thumb-wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    max-height: 260px;
+    overflow: hidden;
+    background-color: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-thumb-img {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s ease;
+}
+
+.post-card:hover .post-thumb-img {
+    transform: scale(1.05);
+}
+
+/* Khung ảnh bài viết chi tiết */
+.post-detail-cover-box {
+    max-height: 420px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #f1f3f5;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-bottom: 2rem;
+}
+
+.post-detail-cover-img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
+}
+
 footer {
     background-color: #343a40;
     color: white;
 }
+
+/* Danh mục trang sản phẩm: mục đang chọn — đen (Bootstrap 5 dùng biến CSS, cần ghi đè cả) */
+.book-category-card .book-category-list {
+    --bs-list-group-active-bg: #212529;
+    --bs-list-group-active-color: #fff;
+    --bs-list-group-active-border-color: #212529;
+}
+.book-category-card .book-category-list .list-group-item.active,
+.book-category-card .book-category-list a.list-group-item.active {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+    color: #fff !important;
+}
+.book-category-card .book-category-list .list-group-item.active:hover,
+.book-category-card .book-category-list .list-group-item.active:focus,
+.book-category-card .book-category-list a.list-group-item.active:hover,
+.book-category-card .book-category-list a.list-group-item.active:focus {
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+    color: #fff !important;
+}
+
+/* Tiện ích kẹp số dòng văn bản (line clamp) */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Banner giới thiệu trang trí đồng bộ */
+.hero-page-banner {
+    background: linear-gradient(135deg, #1a5f4a 0%, #114233 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 2.75rem 2.25rem;
+    box-shadow: 0 10px 30px rgba(26, 95, 74, 0.15);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-page-banner h1, 
+.hero-page-banner h2 {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+.hero-page-banner p {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* Định dạng nội dung bài viết chuyên sâu */
+.post-content {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #334155;
+}
+
+.post-content p {
+    margin-bottom: 1.25rem;
+    text-align: justify;
+}
+
+.post-content h2, 
+.post-content h3 {
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.post-quote-box {
+    background-color: #f8fafc;
+    border-left: 4px solid var(--bs-primary);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    color: #475569;
+    margin-bottom: 1.5rem;
+}
+

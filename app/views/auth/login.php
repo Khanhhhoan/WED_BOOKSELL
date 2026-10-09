@@ -2,7 +2,7 @@
     <div class="col-md-6 col-lg-5">
         <div class="card shadow border-0 rounded-3">
             <div class="card-body p-5">
-                <h3 class="text-center fw-bold mb-4 text-primary"><i class="fas fa-sign-in-alt me-2"></i>Đăng Nhập</h3>
+                <h3 class="text-center fw-bold mb-4 text-primary">Đăng Nhập</h3>
                 
                 <form action="<?php echo  BASE_URL ?>auth/login" method="POST">
                     <div class="mb-3">

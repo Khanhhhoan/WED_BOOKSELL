@@ -6,13 +6,13 @@
             <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
         </ol>
     </nav>
-    <h2 class="fw-bold mb-4"><i class="fas fa-credit-card text-success me-2"></i>Tiến Hành Thanh Toán</h2>
+    <h2 class="fw-bold mb-4">Tiến Hành Thanh Toán</h2>
 
     <div class="row">
         <div class="col-lg-7 mb-4 mb-lg-0">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white p-3 border-bottom border-light">
-                    <h5 class="card-title fw-bold mb-0 text-primary"><i class="fas fa-map-marker-alt me-2"></i>Thông tin vận chuyển</h5>
+                    <h5 class="card-title fw-bold mb-0 text-primary">Thông tin vận chuyển</h5>
                 </div>
                 <div class="card-body p-4">
                     <form action="<?php echo  BASE_URL ?>order/checkout" method="POST" id="checkoutForm">
@@ -32,23 +32,29 @@
                             <textarea name="shipping_address" class="form-control" rows="3" required><?php echo  $data['user']['address'] ?></textarea>
                         </div>
                         
-                        <h5 class="fw-bold mb-3 mt-4 text-primary"><i class="fas fa-wallet me-2"></i>Phương thức thanh toán</h5>
+                        <h5 class="fw-bold mb-3 mt-4 text-primary">Phương thức thanh toán</h5>
                         
                         <div class="list-group mb-4">
-                            <label class="list-group-item d-flex gap-3 bg-light border-light shadow-sm mb-2 rounded pe-auto cursor-pointer">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="payment_method" value="cod" checked>
-                                <span>
-                                    <span class="fw-bold d-block"><i class="fas fa-money-bill-wave text-success me-2"></i>Thanh toán khi nhận hàng (COD)</span>
-                                    <small class="text-muted">Nhận sách và thanh toán tiền mặt trực tiếp cho người giao hàng.</small>
-                                </span>
+                            <label class="list-group-item d-flex gap-3 bg-light border-light shadow-sm mb-3 rounded-3 p-3 pe-auto cursor-pointer border border-primary-subtle">
+                                <input class="form-check-input flex-shrink-0 mt-1" type="radio" name="payment_method" value="sepay" checked>
+                                <div class="w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold fs-6 text-primary"><i class="bi bi-qr-code-scan me-2"></i>Chuyển khoản Ngân hàng tự động (SePay / VietQR)</span>
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle">Tự động 24/7</span>
+                                    </div>
+                                    <small class="text-muted d-block">Quét mã QR qua bất kỳ App ngân hàng nào (MBBank, VCB, ACB, TPBank, VPBank, Techcombank,...). Hệ thống tự động nhận diện và xác nhận đơn ngay lập tức.</small>
+                                </div>
                             </label>
-                            
-                            <label class="list-group-item d-flex gap-3 bg-light border-light shadow-sm rounded pe-auto cursor-pointer">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="payment_method" value="online">
-                                <span>
-                                    <span class="fw-bold d-block"><i class="fas fa-credit-card text-primary me-2"></i>Thanh toán trực tuyến (Mock/Tiền trạm)</span>
-                                    <small class="text-muted">Mô phỏng thanh toán thành công qua thẻ/ví điện tử.</small>
-                                </span>
+
+                            <label class="list-group-item d-flex gap-3 bg-light border-light shadow-sm rounded-3 p-3 pe-auto cursor-pointer">
+                                <input class="form-check-input flex-shrink-0 mt-1" type="radio" name="payment_method" value="cod">
+                                <div class="w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold fs-6"><i class="bi bi-cash-stack me-2"></i>Thanh toán khi nhận hàng (COD)</span>
+                                        <span class="badge bg-secondary-subtle text-secondary">Tiền mặt</span>
+                                    </div>
+                                    <small class="text-muted d-block">Nhận sách và thanh toán tiền mặt trực tiếp cho nhân viên giao hàng.</small>
+                                </div>
                             </label>
                         </div>
 
@@ -78,7 +84,7 @@
                         <strong class="text-danger"><?php echo  number_format($data['total'], 0, ',', '.') ?> VNĐ</strong>
                     </div>
                     
-                    <button type="submit" form="checkoutForm" class="btn btn-success btn-lg w-100 shadow mt-3"><i class="fas fa-cart-arrow-down me-2"></i>Xác Nhận Đặt Hàng</button>
+                    <button type="submit" form="checkoutForm" class="btn btn-success btn-lg w-100 shadow mt-3">Xác Nhận Đặt Hàng</button>
                 </div>
             </div>
         </div>

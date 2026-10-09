@@ -12,7 +12,8 @@ class Database {
 
     public function __construct() {
         // Cấu hình DSN (Data Source Name)
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname . ';charset=utf8';
+        $portPart = (defined('DB_PORT') && DB_PORT !== '' && DB_PORT !== '3306') ? ';port=' . DB_PORT : '';
+        $dsn = 'mysql:host=' . $this->host . $portPart . ';dbname=' . $this->dbname . ';charset=utf8';
         
         // Opts cho PDO
         $options = array(
@@ -24,6 +25,7 @@ class Database {
         // Tạo đối tượng PDO
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+            $this->dbh->exec("SET NAMES 'utf8'");
         } catch(PDOException $e) {
             $this->error = $e->getMessage();
             die("Lỗi kết nối CSDL: " . $this->error);

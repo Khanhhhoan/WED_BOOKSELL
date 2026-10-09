@@ -2,7 +2,7 @@
     <div class="col-md-7 col-lg-6">
         <div class="card shadow border-0 rounded-3">
             <div class="card-body p-5">
-                <h3 class="text-center fw-bold mb-4 text-primary"><i class="fas fa-user-plus me-2"></i>Đăng Ký Tài Khoản</h3>
+                <h3 class="text-center fw-bold mb-4 text-primary">Đăng Ký Tài Khoản</h3>
                 
                 <form action="<?php echo  BASE_URL ?>auth/register" method="POST">
                     <div class="row mb-3">

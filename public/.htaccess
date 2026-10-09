@@ -1,7 +1,16 @@
 Options -Multiviews
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+# Chuyển tiếp Authorization header cho Webhook SePay (Apikey / Bearer)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+# Không đưa thư mục assets vào index.php (ảnh, css, js).
+# Trường hợp A: DocumentRoot = www → URL có .../public/assets/...
+# Trường hợp B: DocumentRoot = thư mục public → URL bắt đầu /assets/...
+RewriteCond %{REQUEST_URI} /public/assets/ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/assets/ [NC]
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

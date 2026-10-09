@@ -13,7 +13,9 @@
             <div class="row">
                 <!-- Book Image -->
                 <div class="col-md-5 col-lg-4 mb-4 mb-md-0 text-center">
-                    <img src="<?php echo  $book['image'] ? BASE_URL . 'assets/images/' . $book['image'] : 'https://placehold.co/400x600?text=Book+Cover' ?>" alt="<?php echo  htmlspecialchars($book['title']) ?>" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: contain;">
+                    <div class="p-3 bg-light rounded-3 border d-flex align-items-center justify-content-center text-center" style="min-height: 380px;">
+                        <img src="<?php echo htmlspecialchars(book_image_url(isset($book['image']) ? $book['image'] : ''), ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($book['title']) ?>" class="img-fluid rounded shadow-sm mx-auto d-block" style="max-height: 420px; width: auto; object-fit: contain;">
+                    </div>
                 </div>
                 
                 <!-- Book Details -->
@@ -21,9 +23,9 @@
                     <h2 class="fw-bold mb-3"><?php echo  htmlspecialchars($book['title']) ?></h2>
                     
                     <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
-                        <div><i class="fas fa-user-edit me-2"></i>Tác giả: <strong><?php echo isset($book['author_name']) ? $book['author_name'] : 'Đang cập nhật' ?></strong></div>
-                        <div><i class="fas fa-layer-group me-2"></i>Thể loại: <strong><?php echo isset($book['category_name']) ? $book['category_name'] : 'Khác' ?></strong></div>
-                        <div><i class="fas fa-box me-2"></i>Tình trạng: 
+                        <div>Tác giả: <strong><?php echo isset($book['author_name']) ? $book['author_name'] : 'Đang cập nhật' ?></strong></div>
+                        <div>Thể loại: <strong><?php echo isset($book['category_name']) ? $book['category_name'] : 'Khác' ?></strong></div>
+                        <div>Tình trạng: 
                             <?php if ($book['stock'] > 0) : ?>
                                 <span class="badge bg-success">Còn <?php echo  $book['stock'] ?> cuốn</span>
                             <?php else : ?>
@@ -46,12 +48,10 @@
                                 <span class="input-group-text bg-white">SL</span>
                                 <input type="number" name="quantity" class="form-control text-center" value="1" min="1" max="<?php echo  $book['stock'] ?>">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg px-4"><i class="fas fa-cart-plus me-2"></i>Thêm Vào Giỏ Hàng</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4">Thêm Vào Giỏ Hàng</button>
                         </form>
                     <?php else : ?>
-                        <div class="alert alert-warning mt-4 d-inline-block">
-                            <i class="fas fa-exclamation-triangle me-2"></i>Sản phẩm hiện đang tạm hết hàng. Vui lòng quay lại sau!
-                        </div>
+                        <div class="alert alert-warning mt-4 d-inline-block">Sản phẩm hiện đang tạm hết hàng. Vui lòng quay lại sau!</div>
                     <?php endif; ?>
                     
                 </div>

@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 class AuthController extends Controller {
     public function __construct() {
-        // N?u dï¿½ dang nh?p thï¿½ khï¿½ng cho vï¿½o trang auth n?a
+        // Đã đăng nhập thì không vào lại trang đăng nhập/đăng ký
         if (Session::isLoggedIn() && isset($_GET['url']) && $_GET['url'] != 'auth/logout') {
             $this->redirect('home');
         }
@@ -9,7 +9,6 @@ class AuthController extends Controller {
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Validate & Process form
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = array(
@@ -22,13 +21,13 @@ class AuthController extends Controller {
             $userModel = $this->model('UserModel');
 
             if (empty($data['email'])) {
-                $data['email_err'] = 'Vui lï¿½ng nh?p email';
+                $data['email_err'] = 'Vui lòng nhập email';
             } elseif (!$userModel->findUserByEmail($data['email'])) {
-                $data['email_err'] = 'Email khï¿½ng t?n t?i';
+                $data['email_err'] = 'Email không tồn tại';
             }
 
             if (empty($data['password'])) {
-                $data['password_err'] = 'Vui lï¿½ng nh?p m?t kh?u';
+                $data['password_err'] = 'Vui lòng nhập mật khẩu';
             }
 
             if (empty($data['email_err']) && empty($data['password_err'])) {
@@ -37,18 +36,17 @@ class AuthController extends Controller {
                 if ($loggedInUser) {
                     $this->createUserSession($loggedInUser);
                 } else {
-                    $data['password_err'] = 'M?t kh?u khï¿½ng chï¿½nh xï¿½c';
-                    $this->view('layouts/header', array('title' => 'ï¿½ang Nh?p'));
+                    $data['password_err'] = 'Mật khẩu không chính xác';
+                    $this->view('layouts/header', array('title' => 'Đăng nhập'));
                     $this->view('auth/login', $data);
                     $this->view('layouts/footer');
                 }
             } else {
-                $this->view('layouts/header', array('title' => 'ï¿½ang Nh?p'));
+                $this->view('layouts/header', array('title' => 'Đăng nhập'));
                 $this->view('auth/login', $data);
                 $this->view('layouts/footer');
             }
         } else {
-            // Init data
             $data = array(
                 'email' => '',
                 'password' => '',
@@ -56,7 +54,7 @@ class AuthController extends Controller {
                 'password_err' => ''
             );
 
-            $this->view('layouts/header', array('title' => 'ï¿½ang Nh?p - BookStore'));
+            $this->view('layouts/header', array('title' => 'Đăng nhập - BookStore'));
             $this->view('auth/login', $data);
             $this->view('layouts/footer');
         }
@@ -81,28 +79,28 @@ class AuthController extends Controller {
             $userModel = $this->model('UserModel');
 
             if (empty($data['email'])) {
-                $data['email_err'] = 'Vui lï¿½ng nh?p email';
+                $data['email_err'] = 'Vui lòng nhập email';
             } else {
                 if ($userModel->findUserByEmail($data['email'])) {
-                    $data['email_err'] = 'Email dï¿½ du?c s? d?ng';
+                    $data['email_err'] = 'Email đã được sử dụng';
                 }
             }
 
             if (empty($data['full_name'])) {
-                $data['full_name_err'] = 'Vui lï¿½ng nh?p h? tï¿½n';
+                $data['full_name_err'] = 'Vui lòng nhập họ tên';
             }
 
             if (empty($data['password'])) {
-                $data['password_err'] = 'Vui lï¿½ng nh?p m?t kh?u';
+                $data['password_err'] = 'Vui lòng nhập mật khẩu';
             } elseif (strlen($data['password']) < 6) {
-                $data['password_err'] = 'M?t kh?u ph?i t? 6 kï¿½ t? tr? lï¿½n';
+                $data['password_err'] = 'Mật khẩu phải từ 6 ký tự trở lên';
             }
 
             if (empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Vui lï¿½ng xï¿½c nh?n m?t kh?u';
+                $data['confirm_password_err'] = 'Vui lòng xác nhận mật khẩu';
             } else {
                 if ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'M?t kh?u xï¿½c nh?n khï¿½ng kh?p';
+                    $data['confirm_password_err'] = 'Mật khẩu xác nhận không khớp';
                 }
             }
 
@@ -110,13 +108,13 @@ class AuthController extends Controller {
                 $data['password'] = md5($data['password']);
 
                 if ($userModel->register($data)) {
-                    Session::flash('msg', 'ï¿½ang kï¿½ thï¿½nh cï¿½ng, b?n cï¿½ th? dang nh?p!');
+                    Session::flash('msg', 'Đăng ký thành công, bạn có thể đăng nhập!');
                     $this->redirect('auth/login');
                 } else {
                     die('Something went wrong');
                 }
             } else {
-                $this->view('layouts/header', array('title' => 'ï¿½ang Kï¿½ - BookStore'));
+                $this->view('layouts/header', array('title' => 'Đăng ký - BookStore'));
                 $this->view('auth/register', $data);
                 $this->view('layouts/footer');
             }
@@ -133,7 +131,7 @@ class AuthController extends Controller {
                 'confirm_password_err' => ''
             );
 
-            $this->view('layouts/header', array('title' => 'ï¿½ang Kï¿½ - BookStore'));
+            $this->view('layouts/header', array('title' => 'Đăng ký - BookStore'));
             $this->view('auth/register', $data);
             $this->view('layouts/footer');
         }
@@ -156,4 +154,3 @@ class AuthController extends Controller {
         $this->redirect('auth/login');
     }
 }
-

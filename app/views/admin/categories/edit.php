@@ -1,9 +1,9 @@
 <div class="row justify-content-center mb-5">
     <div class="col-md-8 col-lg-6">
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <h6 class="m-0 fw-bold text-primary"><i class="fas fa-edit me-1"></i>Sửa Danh Mục #<?php echo  $data['category']['id'] ?></h6>
-                <a href="<?php echo  BASE_URL ?>admin/categories" class="btn btn-sm btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i>Quay lại</a>
+        <div class="card shadow-sm border">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+                <h6 class="m-0 fw-semibold text-dark">Sửa Danh Mục #<?php echo  $data['category']['id'] ?></h6>
+                <a href="<?php echo  BASE_URL ?>admin/categories" class="btn btn-sm btn-outline-secondary">Quay lại</a>
             </div>
             <div class="card-body p-4">
                 <form action="<?php echo  BASE_URL ?>admin/category_edit/<?php echo  $data['category']['id'] ?>" method="POST">
@@ -17,7 +17,7 @@
                         <textarea name="description" class="form-control" rows="5"><?php echo  htmlspecialchars($data['category']['description']) ?></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100 py-2"><i class="fas fa-save me-2"></i>Cập Nhật Thay Đổi</button>
+                    <button type="submit" class="btn btn-dark w-100 py-2">Cập Nhật Thay Đổi</button>
                 </form>
             </div>
         </div>

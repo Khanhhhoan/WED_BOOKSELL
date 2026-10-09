@@ -8,11 +8,16 @@ class HomeController extends Controller {
         $newBooks = $bookModel->getNewBooks(8);
         $featuredBooks = $bookModel->getFeaturedBooks(4);
         
+        $postModel = $this->model('PostModel');
+        $allPosts = $postModel->getAllPosts();
+        $latestPosts = !empty($allPosts) ? array_slice($allPosts, 0, 3) : array();
+        
         // Truyền data sang view
         $data = array(
             'title' => 'Trang Chủ - BookStore',
             'newBooks' => $newBooks,
-            'featuredBooks' => $featuredBooks
+            'featuredBooks' => $featuredBooks,
+            'latestPosts' => $latestPosts
         );
         
         // Render view
@@ -28,6 +33,16 @@ class HomeController extends Controller {
         
         $this->view('layouts/header', $data);
         $this->view('home/contact', $data);
+        $this->view('layouts/footer');
+    }
+
+    public function about() {
+        $data = array(
+            'title' => 'Giới Thiệu - BookStore'
+        );
+
+        $this->view('layouts/header', $data);
+        $this->view('home/about', $data);
         $this->view('layouts/footer');
     }
 }
