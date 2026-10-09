@@ -29,7 +29,7 @@
                         <textarea class="form-control" id="message" rows="5" placeholder="Bạn cần hỗ trợ điều gì?" required></textarea>
                     </div>
                     
-                    <button type="button" class="btn btn-primary" onclick="alert('Cảm ơn bạn đã liên hệ! Tính năng Gửi Email đang được thử nghiệm.');">Gửi Tin Nhắn</button>
+                    <button type="button" class="btn btn-success px-4 py-2 fw-semibold shadow-sm" onclick="alert('Cảm ơn bạn đã liên hệ! Tính năng Gửi Email đang được thử nghiệm.');"><i class="bi bi-send me-1"></i> Gửi Tin Nhắn</button>
                 </form>
             </div>
         </div>

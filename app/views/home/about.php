@@ -41,10 +41,6 @@
 
     <!-- Sứ mệnh - Tầm nhìn - Cam kết -->
     <div class="mb-5">
-        <div class="text-center mb-4">
-            <h3 class="fw-bold text-dark">Giá Trị Cốt Lõi Tại BookStore</h3>
-            <p class="text-muted small">Những nguyên tắc định hướng cho từng hoạt động phục vụ bạn</p>
-        </div>
 
         <div class="row g-4">
             <div class="col-md-4">
