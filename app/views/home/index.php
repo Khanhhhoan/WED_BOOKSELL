@@ -62,51 +62,5 @@
     </div>
 </div>
 
-<!-- Latest Posts Section -->
-<?php if (!empty($data['latestPosts'])) : ?>
-<div class="mt-5 mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2 class="fw-bold text-dark mb-1">Góc Văn Hóa Đọc &amp; Bài Viết Hay</h2>
-            <p class="text-muted small mb-0">Chia sẻ góc nhìn, kỹ năng và những cuốn sách khai sáng tư duy</p>
-        </div>
-        <a href="<?php echo BASE_URL ?>post" class="text-decoration-none fw-semibold">Xem tất cả &rarr;</a>
-    </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($data['latestPosts'] as $p) : ?>
-            <div class="col">
-                <article class="card h-100 post-card shadow-sm border rounded-3 overflow-hidden">
-                    <a href="<?php echo BASE_URL ?>post/detail/<?php echo $p['id'] ?>" class="post-thumb-wrapper d-flex align-items-center justify-content-center text-center text-decoration-none" style="height: 180px; min-height: 180px; max-height: 180px;">
-                        <img src="<?php echo htmlspecialchars(post_image_url(isset($p['image']) ? $p['image'] : ''), ENT_QUOTES, 'UTF-8'); ?>" 
-                             class="post-thumb-img mx-auto d-block" 
-                             alt="<?php echo htmlspecialchars($p['title']) ?>"
-                             loading="lazy">
-                    </a>
-                    <div class="card-body d-flex flex-column p-3">
-                        <div class="text-muted small mb-2 d-flex align-items-center gap-2">
-                            <span><?php echo date('d/m/Y', strtotime($p['created_at'])) ?></span>
-                            <span>&bull;</span>
-                            <span class="text-primary fw-semibold">5 phút đọc</span>
-                        </div>
-                        <h6 class="card-title fw-bold mb-2">
-                            <a href="<?php echo BASE_URL ?>post/detail/<?php echo $p['id'] ?>" class="text-dark text-decoration-none hover-primary text-truncate-2" title="<?php echo htmlspecialchars($p['title']) ?>">
-                                <?php echo htmlspecialchars($p['title']) ?>
-                            </a>
-                        </h6>
-                        <p class="card-text text-muted small text-truncate-2 mb-3 flex-grow-1">
-                            <?php echo htmlspecialchars($p['excerpt']) ?>
-                        </p>
-                        <div class="mt-auto pt-2 border-top">
-                            <a href="<?php echo BASE_URL ?>post/detail/<?php echo $p['id'] ?>" class="btn btn-outline-primary btn-sm rounded-pill w-100">
-                                Đọc bài viết
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-<?php endif; ?>
 
