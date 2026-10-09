@@ -38,33 +38,6 @@
         </div>
     </div>
 
-    <!-- Số liệu ấn tượng (Stats) -->
-    <div class="row g-3 mb-5">
-        <div class="col-6 col-md-3">
-            <div class="card h-100 border text-center p-3 rounded-3 shadow-sm bg-white">
-                <h3 class="fw-bold text-primary mb-1">10.000+</h3>
-                <p class="text-muted small mb-0">Tựa sách phong phú</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100 border text-center p-3 rounded-3 shadow-sm bg-white">
-                <h3 class="fw-bold text-success mb-1">50.000+</h3>
-                <p class="text-muted small mb-0">Độc giả tin yêu</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100 border text-center p-3 rounded-3 shadow-sm bg-white">
-                <h3 class="fw-bold text-dark mb-1">100%</h3>
-                <p class="text-muted small mb-0">Sách có bản quyền</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100 border text-center p-3 rounded-3 shadow-sm bg-white">
-                <h3 class="fw-bold text-info mb-1">24/7</h3>
-                <p class="text-muted small mb-0">Hỗ trợ độc giả</p>
-            </div>
-        </div>
-    </div>
 
     <!-- Sứ mệnh - Tầm nhìn - Cam kết -->
     <div class="mb-5">
