@@ -57,7 +57,11 @@ function get_sepay_config($key = null) {
  * Lấy URL Webhook tuyệt đối của hệ thống
  */
 function get_sepay_webhook_url() {
-    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    $protocol = 'http';
+    if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
+        (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
+        $protocol = 'https';
+    }
     $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost:88';
     $baseUrl = defined('BASE_URL') ? BASE_URL : '/WedSach/bookstore/public/';
     return $protocol . '://' . $host . rtrim($baseUrl, '/') . '/sepay/webhook';
