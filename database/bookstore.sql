@@ -1,4 +1,4 @@
-﻿-- MySQL dump 10.11
+-- MySQL dump 10.11
 --
 -- Host: localhost    Database: bookstore
 -- ------------------------------------------------------
@@ -160,7 +160,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,3,'65000.00','completed','KhÃ¡nh Nguyá»…n','087930928','hcm','2026-03-19 14:36:42'),(2,3,'44545.00','completed','KhÃ¡nh Nguyá»…n','0827930928','hcm','2026-03-20 03:47:38'),(3,1,'79000.00','completed','Administrator','0123456789','hcn','2026-03-22 15:37:12'),(4,4,'330000.00','confirmed','Thanh Binh','123456789','hcm','2026-03-22 17:31:08'),(5,3,'220000.00','pending','KhÃ¡nh Nguyá»…n','0123456789','sdsd','2026-03-22 17:36:22'),(8,1,'65000.00','completed','Administrator','0123456789','hcm','2026-10-09 10:03:11'),(9,5,'194545.00','cancelled','Khánh Khánh','0123456987','hcm','2026-10-09 18:26:24');
+INSERT INTO `orders` VALUES (1,3,'65000.00','completed','Khánh Nguyễn','087930928','hcm','2026-03-19 14:36:42'),(2,3,'44545.00','completed','Khánh Nguyễn','0827930928','hcm','2026-03-20 03:47:38'),(3,1,'79000.00','completed','Administrator','0123456789','hcn','2026-03-22 15:37:12'),(4,4,'330000.00','confirmed','Thanh Binh','123456789','hcm','2026-03-22 17:31:08'),(5,3,'220000.00','pending','Khánh Nguyễn','0123456987','sdsd','2026-03-22 17:36:22'),(8,1,'65000.00','completed','Administrator','0123456789','hcm','2026-10-09 10:03:11'),(9,5,'194545.00','cancelled','Khánh Khánh','0123456987','hcm','2026-10-09 18:26:24');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +313,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Administrator','admin@gmail.com','e10adc3949ba59abbe56e057f20f883e','0123456789',NULL,'admin','2026-03-19 14:35:38'),(2,'Nguyá»…n VÄƒn KhÃ¡ch','user@gmail.com','e10adc3949ba59abbe56e057f20f883e','0987654321',NULL,'user','2026-03-19 14:35:38'),(3,'KhÃ¡nh Nguyá»…n','khanhhoan121209@gmail.com','9581cb1defff1417409d1632fd20a2ac','',NULL,'user','2026-03-19 14:35:45'),(4,'Thanh Binh','Binh@gmail.com','e10adc3949ba59abbe56e057f20f883e','123456789',NULL,'user','2026-03-22 17:30:28'),(5,'Khánh Khánh','khanhkhanh@gmail.com','e10adc3949ba59abbe56e057f20f883e','0123456987',NULL,'user','2026-10-09 18:23:25');
+INSERT INTO `users` VALUES (1,'Administrator','admin@gmail.com','e10adc3949ba59abbe56e057f20f883e','0123456789',NULL,'admin','2026-03-19 14:35:38'),(2,'Nguyễn Văn Khách','user@gmail.com','e10adc3949ba59abbe56e057f20f883e','0987654321',NULL,'user','2026-03-19 14:35:38'),(3,'Khánh Nguyễn','khanhhoan121209@gmail.com','9581cb1defff1417409d1632fd20a2ac','',NULL,'user','2026-03-19 14:35:45'),(4,'Thanh Binh','Binh@gmail.com','e10adc3949ba59abbe56e057f20f883e','123456789',NULL,'user','2026-03-22 17:30:28'),(5,'Khánh Khánh','khanhkhanh@gmail.com','e10adc3949ba59abbe56e057f20f883e','0123456987',NULL,'user','2026-10-09 18:23:25');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
