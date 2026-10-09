@@ -15,8 +15,6 @@ class OrderController extends Controller {
 
         // Gửi form thanh toán
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $cart = $_SESSION['cart'];
             $bookModel = $this->model('BookModel');
             foreach ($cart as $bookId => $item) {

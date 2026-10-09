@@ -18,9 +18,18 @@ class Controller {
         }
     }
 
-    // Hàm tiện ích để chuyển hướng
+    // Hàm tiện ích để chuyển hướng an toàn
     public function redirect($url) {
-        header('Location: ' . BASE_URL . $url);
+        $target = (strpos($url, 'http://') === 0 || strpos($url, 'https://') === 0) 
+            ? $url 
+            : rtrim(BASE_URL, '/') . '/' . ltrim($url, '/');
+
+        if (!headers_sent()) {
+            header('Location: ' . $target);
+        } else {
+            echo '<script type="text/javascript">window.location.href=' . json_encode($target) . ';</script>';
+            echo '<noscript><meta http-equiv="refresh" content="0;url=' . htmlspecialchars($target, ENT_QUOTES, 'UTF-8') . '"></noscript>';
+        }
         exit;
     }
 }

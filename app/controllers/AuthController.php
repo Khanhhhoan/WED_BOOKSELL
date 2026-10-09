@@ -9,11 +9,9 @@ class AuthController extends Controller {
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $data = array(
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
+                'email' => isset($_POST['email']) ? trim((string)$_POST['email']) : '',
+                'password' => isset($_POST['password']) ? trim((string)$_POST['password']) : '',
                 'email_err' => '',
                 'password_err' => ''
             );
@@ -62,14 +60,12 @@ class AuthController extends Controller {
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $data = array(
-                'full_name' => trim($_POST['full_name']),
-                'email' => trim($_POST['email']),
-                'phone' => trim($_POST['phone']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
+                'full_name' => isset($_POST['full_name']) ? trim((string)$_POST['full_name']) : '',
+                'email' => isset($_POST['email']) ? trim((string)$_POST['email']) : '',
+                'phone' => isset($_POST['phone']) ? trim((string)$_POST['phone']) : '',
+                'password' => isset($_POST['password']) ? trim((string)$_POST['password']) : '',
+                'confirm_password' => isset($_POST['confirm_password']) ? trim((string)$_POST['confirm_password']) : '',
                 'full_name_err' => '',
                 'email_err' => '',
                 'password_err' => '',

@@ -46,11 +46,9 @@ class AdminController extends Controller {
 
     public function category_add() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $data = array(
-                'name' => trim($_POST['name']),
-                'description' => trim($_POST['description']),
+                'name' => isset($_POST['name']) ? trim((string)$_POST['name']) : '',
+                'description' => isset($_POST['description']) ? trim((string)$_POST['description']) : '',
             );
 
             if (!empty($data['name'])) {
@@ -72,12 +70,10 @@ class AdminController extends Controller {
         $categoryModel = $this->model('CategoryModel');
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $data = array(
                 'id' => $id,
-                'name' => trim($_POST['name']),
-                'description' => trim($_POST['description']),
+                'name' => isset($_POST['name']) ? trim((string)$_POST['name']) : '',
+                'description' => isset($_POST['description']) ? trim((string)$_POST['description']) : '',
             );
 
             if (!empty($data['name'])) {
@@ -673,8 +669,6 @@ class AdminController extends Controller {
         $logModel = $this->model('PaymentLogModel');
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $settings = array(
                 'sepay_bank' => isset($_POST['sepay_bank']) ? trim((string)$_POST['sepay_bank']) : 'MBBank',
                 'sepay_account_no' => isset($_POST['sepay_account_no']) ? trim((string)$_POST['sepay_account_no']) : '',
