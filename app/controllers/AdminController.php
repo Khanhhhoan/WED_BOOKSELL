@@ -196,10 +196,16 @@ class AdminController extends Controller {
                 Session::flash('error', $this->postImageUploadErrorMessage());
                 $this->redirect('admin/post_add');
             }
+            $imageUrl = isset($_POST['image_url']) ? trim((string)$_POST['image_url']) : '';
+            if ($imageUrl === '' && isset($_POST['image'])) {
+                $imageUrl = trim((string)$_POST['image']);
+            }
             if ($uploadResult !== null && $uploadResult !== '') {
                 $imageName = $uploadResult;
+            } elseif ($imageUrl !== '') {
+                $imageName = $imageUrl;
             } else {
-                $imageName = isset($_POST['image']) ? trim((string)$_POST['image']) : '';
+                $imageName = '';
             }
 
             $data = array(
@@ -236,11 +242,16 @@ class AdminController extends Controller {
                 Session::flash('error', $this->postImageUploadErrorMessage() . ' Đã giữ lại ảnh bìa hiện tại.');
                 $uploadResult = null;
             }
+            $imageUrl = isset($_POST['image_url']) ? trim((string)$_POST['image_url']) : '';
+            if ($imageUrl === '' && isset($_POST['image'])) {
+                $imageUrl = trim((string)$_POST['image']);
+            }
             if ($uploadResult !== null && $uploadResult !== '') {
                 $imageName = $uploadResult;
+            } elseif ($imageUrl !== '') {
+                $imageName = $imageUrl;
             } else {
-                $imageInput = isset($_POST['image']) ? trim((string)$_POST['image']) : '';
-                $imageName = ($imageInput !== '') ? $imageInput : $currentImage;
+                $imageName = $currentImage;
             }
 
             $data = array(
@@ -314,7 +325,14 @@ class AdminController extends Controller {
                 Session::flash('error', $this->bookImageUploadErrorMessage());
                 $this->redirect('admin/book_add');
             }
-            $imageName = ($uploadResult !== null && $uploadResult !== '') ? $uploadResult : '';
+            $imageUrl = isset($_POST['image_url']) ? trim((string)$_POST['image_url']) : '';
+            if ($uploadResult !== null && $uploadResult !== '') {
+                $imageName = $uploadResult;
+            } elseif ($imageUrl !== '') {
+                $imageName = $imageUrl;
+            } else {
+                $imageName = '';
+            }
 
             $data = array(
                 'title' => isset($_POST['title']) ? trim((string)$_POST['title']) : '',
@@ -330,7 +348,7 @@ class AdminController extends Controller {
             if ($bookModel->addBook($data)) {
                 $msg = 'Thêm sách thành công!';
                 if ($uploadResult !== null && $uploadResult !== '') {
-                    $msg .= ' Ảnh đã lưu: ' . $uploadResult . ' (trùng tên trong CSDL mới hiện được).';
+                    $msg .= ' Ảnh đã lưu: ' . $uploadResult;
                 }
                 Session::flash('msg', $msg);
                 $this->redirect('admin/books');
@@ -358,8 +376,11 @@ class AdminController extends Controller {
                 Session::flash('error', $this->bookImageUploadErrorMessage() . ' Thông tin sách vẫn được lưu; ảnh bìa giữ nguyên.');
                 $uploadResult = null;
             }
+            $imageUrl = isset($_POST['image_url']) ? trim((string)$_POST['image_url']) : '';
             if ($uploadResult !== null && $uploadResult !== '') {
                 $imageName = $uploadResult;
+            } elseif ($imageUrl !== '') {
+                $imageName = $imageUrl;
             } else {
                 $imageName = $currentImage;
             }

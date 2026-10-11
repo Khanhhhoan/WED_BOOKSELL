@@ -41,8 +41,9 @@
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Ảnh bìa (tùy chọn)</label>
-                <input type="file" class="form-control" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">
-                <small class="text-muted d-block mt-1">Chọn ảnh từ máy — hệ thống tự đặt tên file và lưu vào <code>public/assets/images/</code>. Không cần trùng tên với database.</small>
+                <input type="file" class="form-control mb-2" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">
+                <input type="url" class="form-control" name="image_url" placeholder="Hoặc dán Link ảnh online (URL) tại đây (khuyên dùng để ảnh không bao giờ mất)">
+                <small class="text-muted d-block mt-1">Lưu ý: Trên hosting Render, dán link ảnh online (từ Unsplash, Tiki, Imgur...) sẽ không bao giờ bị xóa khi web khởi động lại.</small>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Mô tả nội dung</label>

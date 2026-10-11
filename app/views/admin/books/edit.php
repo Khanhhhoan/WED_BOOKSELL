@@ -48,8 +48,9 @@
                         <div class="small text-muted mt-1">Ảnh hiện tại: <code><?php echo htmlspecialchars($book['image']); ?></code></div>
                     </div>
                 <?php endif; ?>
-                <input type="file" class="form-control" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">
-                <small class="text-muted d-block mt-1">Chọn ảnh mới từ máy để thay bìa (JPG, PNG, GIF, WebP). Để trống nếu chỉ sửa chữ — giữ ảnh cũ.</small>
+                <input type="file" class="form-control mb-2" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">
+                <input type="url" class="form-control" name="image_url" placeholder="Hoặc dán Link ảnh online (URL) tại đây để thay thế">
+                <small class="text-muted d-block mt-1">Để trống nếu muốn giữ nguyên ảnh hiện tại.</small>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Mô tả nội dung</label>
