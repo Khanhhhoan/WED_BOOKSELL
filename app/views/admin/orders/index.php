@@ -1,10 +1,5 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark">Quản Lý Đơn Hàng</h2>
-    <div>
-        <a href="<?php echo BASE_URL ?>admin/statistics" class="btn btn-primary btn-sm shadow-sm">
-            <i class="bi bi-bar-chart-line me-1"></i> Xem Thống Kê & Doanh Thu
-        </a>
-    </div>
+<div class="mb-4">
+    <h2 class="fw-bold text-dark mb-0">Quản Lý Đơn Hàng</h2>
 </div>
 
 <div class="card shadow-sm border">
@@ -44,9 +39,9 @@
 
                                     if ($pMethod === 'sepay' || $pMethod === 'online') {
                                         if ($pStatus === 'success') {
-                                            echo '<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-qr-code me-1"></i> SePay: Đã TT</span>';
+                                            echo '<span class="badge bg-success-subtle text-success border border-success-subtle">SePay: Đã TT</span>';
                                         } else {
-                                            echo '<span class="badge bg-warning-subtle text-warning border border-warning-subtle"><i class="bi bi-clock me-1"></i> SePay: Chờ TT</span>';
+                                            echo '<span class="badge bg-warning-subtle text-warning border border-warning-subtle">SePay: Chờ TT</span>';
                                         }
                                     } else {
                                         echo '<span class="badge bg-secondary-subtle text-secondary border">COD (Tiền mặt)</span>';

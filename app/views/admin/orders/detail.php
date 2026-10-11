@@ -41,21 +41,21 @@
             <!-- Thông tin thanh toán SePay / COD -->
             <div class="card shadow-sm border">
                 <div class="card-body">
-                    <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="bi bi-credit-card me-1 text-primary"></i>Thanh Toán</h5>
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Thanh Toán</h5>
                     <p class="mb-2">
                         <strong>Hình thức:</strong> 
                         <?php if (isset($data['order']['payment_method']) && ($data['order']['payment_method'] === 'sepay' || $data['order']['payment_method'] === 'online')) : ?>
-                            <span class="badge bg-primary"><i class="bi bi-qr-code me-1"></i> SePay Chuyển Khoản</span>
+                            <span class="badge bg-primary">SePay Chuyển Khoản</span>
                         <?php else : ?>
-                            <span class="badge bg-secondary"><i class="bi bi-cash me-1"></i> COD Tiền Mặt</span>
+                            <span class="badge bg-secondary">COD Tiền Mặt</span>
                         <?php endif; ?>
                     </p>
                     <p class="mb-2">
                         <strong>Trạng thái:</strong>
                         <?php if (isset($data['order']['payment_status']) && $data['order']['payment_status'] === 'success') : ?>
-                            <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Đã thanh toán</span>
+                            <span class="badge bg-success">Đã thanh toán</span>
                         <?php else : ?>
-                            <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Chờ thanh toán</span>
+                            <span class="badge bg-warning text-dark">Chờ thanh toán</span>
                         <?php endif; ?>
                     </p>
                     <?php if (!empty($data['order']['payment_transaction_id'])) : ?>
