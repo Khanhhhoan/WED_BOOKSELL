@@ -167,12 +167,12 @@ img {
     object-position: center;
 }
 
-/* Footer Cao Cấp & Đồng Bộ Tone Xanh Rừng (Forest Green) */
+/* Footer Nhẹ Nhàng & Đồng Bộ Tone Pastel (#c3cfe2) */
 .site-footer {
-    background: linear-gradient(180deg, #164639 0%, #0f3329 100%);
-    color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(180deg, #eef3f8 0%, #c9d6e5 100%) !important;
+    color: #2b3a4a;
     position: relative;
-    border-top: 3px solid #287a62;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .footer-heading {
@@ -180,6 +180,7 @@ img {
     font-size: 0.85rem;
     position: relative;
     padding-bottom: 8px;
+    color: #1e293b;
 }
 
 .footer-heading::after {
@@ -189,12 +190,12 @@ img {
     left: 0;
     width: 28px;
     height: 2px;
-    background-color: #34d399;
+    background-color: #1a5f4a;
     border-radius: 2px;
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.72);
+    color: #334155;
     text-decoration: none;
     font-size: 0.92rem;
     transition: all 0.2s ease;
@@ -202,7 +203,7 @@ img {
 }
 
 .footer-links a:hover {
-    color: #ffffff;
+    color: #1a5f4a;
     transform: translateX(4px);
 }
 
@@ -210,25 +211,29 @@ img {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #334155;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.25s ease;
 }
 
 .social-btn:hover {
-    background-color: #287a62;
+    background-color: #1a5f4a;
     color: #ffffff;
+    border-color: #1a5f4a;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 10px rgba(26, 95, 74, 0.2);
 }
 
 .footer-bottom {
-    background-color: #0b241c;
+    background-color: #bcccdc;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Danh mục trang sản phẩm: mục đang chọn — đen (Bootstrap 5 dùng biến CSS, cần ghi đè cả) */
