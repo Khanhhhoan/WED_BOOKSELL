@@ -52,8 +52,8 @@
 <!-- New Books -->
 <div class="mt-5 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-success">Sách Mới Cập Nhật</h2>
-        <a href="<?php echo BASE_URL ?>book" class="text-decoration-none">Xem tất cả</a>
+        <h2 class="fw-bold text-dark">Sách Mới Cập Nhật</h2>
+        <a href="<?php echo BASE_URL ?>book" class="text-decoration-none text-primary fw-semibold">Xem tất cả <i class="bi bi-chevron-right small"></i></a>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         <?php foreach ($data['newBooks'] as $book) : ?>
