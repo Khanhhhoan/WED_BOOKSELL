@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light site-navbar sticky-top" style="background: linear-gradient(135deg, #eaf0f7 0%, #c3cfe2 100%);">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="<?php echo  BASE_URL ?>">BookStore</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

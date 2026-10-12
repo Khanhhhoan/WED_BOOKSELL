@@ -17,7 +17,36 @@ body {
 }
 
 .navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,.06);
+}
+
+/* Thanh menu với màu nền nhẹ nhàng đồng bộ với banner (#c3cfe2) */
+.site-navbar {
+    background: linear-gradient(135deg, #eaf0f7 0%, #c3cfe2 100%) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.site-navbar .navbar-brand {
+    color: #1a5f4a !important;
+    font-size: 1.35rem;
+}
+
+.site-navbar .nav-link {
+    color: #2b3a4a !important;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 0.45rem 0.75rem !important;
+    transition: all 0.2s ease;
+}
+
+.site-navbar .nav-link:hover {
+    color: #1a5f4a !important;
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+.site-navbar .form-control {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Đảm bảo hình ảnh không bao giờ tràn viền */
