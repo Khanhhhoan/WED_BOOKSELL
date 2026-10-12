@@ -75,13 +75,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Thanh bản quyền đáy (Bottom bar) -->
-        <div class="footer-bottom py-3 border-top" style="background-color: #bcccdc; border-color: rgba(0,0,0,0.08) !important;">
-            <div class="container text-center text-secondary small">
-                &copy; <?php echo date('Y') ?> <strong class="text-dark">BookStore</strong>. Bản quyền thuộc về Nhà Sách Trực Tuyến BookStore.
-            </div>
-        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
