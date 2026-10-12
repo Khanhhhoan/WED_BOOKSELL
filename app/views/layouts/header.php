@@ -75,7 +75,7 @@
             </div>
         </div>
     </nav>
-    <main class="min-vh-100">
+    <main class="flex-grow-1">
         <div class="container mt-4">
             <?php Session::flash('msg'); ?>
             <?php Session::flash('error', '', 'alert alert-danger'); ?>
