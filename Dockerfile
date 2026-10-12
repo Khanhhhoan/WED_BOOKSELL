@@ -1,7 +1,11 @@
 # Dockerfile triển khai website BookStore lên Render.com
 FROM php:8.1-apache
 
-# Cài đặt extension PDO MySQL và GD xử lý ảnh
+# Cài đặt extension PDO MySQL, GD xử lý ảnh và thiết lập múi giờ Việt Nam (Asia/Ho_Chi_Minh)
+ENV TZ=Asia/Ho_Chi_Minh
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && printf "date.timezone = Asia/Ho_Chi_Minh\n" > /usr/local/etc/php/conf.d/timezone.ini
+
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \

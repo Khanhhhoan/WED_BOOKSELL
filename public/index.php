@@ -1,4 +1,7 @@
 <?php
+// Thiết lập múi giờ Việt Nam (UTC+7) chuẩn cho toàn bộ hệ thống
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 // Bật output buffering để ngăn chặn lỗi "Cannot modify header information"
 if (ob_get_level() == 0) {
     ob_start();
