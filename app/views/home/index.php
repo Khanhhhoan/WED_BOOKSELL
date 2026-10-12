@@ -2,9 +2,6 @@
 <div class="hero-banner p-4 p-md-5 mb-5">
     <div class="row align-items-center">
         <div class="col-lg-8 col-md-7 py-2 py-md-3">
-            <span class="badge rounded-pill hero-badge mb-3">
-                <i class="bi bi-journal-bookmark me-1"></i> Không Gian Tri Thức & Đọc Sách
-            </span>
             <h1 class="display-5 fw-bold hero-title mb-3">Kho Sách Phong Phú</h1>
             <p class="fs-5 hero-subtitle mb-4">
                 Khám phá hàng ngàn tựa sách hấp dẫn từ văn học, kinh tế, công nghệ cho đến kỹ năng sống. Cùng nâng tầm tri thức mỗi ngày!
