@@ -1,13 +1,32 @@
 <!-- Hero/Banner Section -->
-<div class="p-5 mb-4 bg-light rounded-3 shadow-sm border" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold text-primary">Kho Sách Phong Phú</h1>
-        <p class="col-md-8 fs-4 text-secondary">
-            Khám phá hàng ngàn tựa sách hấp dẫn từ văn học, kinh tế, công nghệ cho đến kỹ năng sống. Cùng nâng tầm tri thức mỗi ngày!
-        </p>
-        <a href="<?php echo  BASE_URL ?>book" class="btn btn-primary btn-lg mt-3 shadow">Khám Phá Ngay</a>
+<div class="hero-banner p-4 p-md-5 mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-8 col-md-7 py-2 py-md-3">
+            <span class="badge rounded-pill hero-badge mb-3">
+                <i class="bi bi-journal-bookmark me-1"></i> Không Gian Tri Thức & Đọc Sách
+            </span>
+            <h1 class="display-5 fw-bold hero-title mb-3">Kho Sách Phong Phú</h1>
+            <p class="fs-5 hero-subtitle mb-4">
+                Khám phá hàng ngàn tựa sách hấp dẫn từ văn học, kinh tế, công nghệ cho đến kỹ năng sống. Cùng nâng tầm tri thức mỗi ngày!
+            </p>
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+                <a href="<?php echo BASE_URL ?>book" class="btn btn-hero">
+                    Khám Phá Ngay <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+                <a href="<?php echo BASE_URL ?>home/about" class="btn btn-hero-outline">
+                    Về Chúng Tôi
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-5 d-none d-md-flex justify-content-center align-items-center">
+            <div class="hero-deco-box">
+                <div class="hero-deco-backdrop"></div>
+                <i class="bi bi-book-half hero-deco-icon"></i>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <!-- Featured Books -->
 <div class="mt-5">
