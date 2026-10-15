@@ -1,7 +1,7 @@
 services:
   - type: web
     name: bookstore-web
-    env: docker
+    runtime: docker
     plan: free
     region: singapore
     dockerfilePath: ./Dockerfile
