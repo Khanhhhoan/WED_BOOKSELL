@@ -1,75 +1,52 @@
-<div class="mb-5">
+<div class="mb-5" style="max-width: 860px; margin: 0 auto;">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-3">
+        <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-muted">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">Giới thiệu</li>
         </ol>
     </nav>
 
-    <!-- Khối nội dung duy nhất, trình bày rõ ràng, không màu mè -->
-    <div class="card border rounded-3 p-4 p-md-5 bg-white shadow-sm">
-        <h2 class="fw-bold mb-2 text-dark">Giới Thiệu Về BookStore</h2>
-        <p class="text-muted mb-4 pb-3 border-bottom">Hệ thống phân phối và kết nối tri thức trực tuyến dành cho bạn</p>
+    <!-- Tiêu đề trang -->
+    <div class="mb-4">
+        <h1 class="fw-bold text-dark mb-2" style="font-size: 2.2rem; letter-spacing: -0.5px;">Giới Thiệu Về BookStore</h1>
+        <p class="text-muted fs-6 mb-0">Hành trình kết nối tri thức và nuôi dưỡng niềm đam mê đọc sách</p>
+    </div>
 
-        <!-- 1. Về Chúng Tôi -->
-        <section class="mb-4">
-            <h5 class="fw-bold text-dark mb-2">1. Về Chúng Tôi</h5>
-            <p class="text-secondary mb-0" style="line-height: 1.8;">
-                BookStore là nền tảng phân phối và kết nối sách trực tuyến, ra đời với mong muốn mang những trang sách tinh hoa và văn hóa đọc đích thực đến tận tay mọi độc giả trên khắp mọi miền đất nước. Chúng tôi tin rằng mỗi cuốn sách là một người bạn đồng hành quý giá trên con đường học tập, làm việc và hoàn thiện bản thân.
-            </p>
-        </section>
+    <!-- Nội dung giới thiệu tự nhiên, không khung viền -->
+    <div class="text-secondary" style="font-size: 1.05rem; line-height: 1.9;">
+        
+        <p>
+            Chào mừng bạn đến với <strong>BookStore</strong>. Chúng tôi được xây dựng với một niềm tin đơn giản nhưng sâu sắc: <em>mỗi cuốn sách là một cánh cửa mở ra thế giới</em>, là người bạn đồng hành đáng tin cậy trên con đường học tập, phát triển bản thân và tìm kiếm sự tĩnh lặng trong tâm hồn.
+        </p>
 
-        <!-- 2. Sứ Mệnh & Tầm Nhìn -->
-        <section class="mb-4">
-            <h5 class="fw-bold text-dark mb-3">2. Sứ Mệnh &amp; Tầm Nhìn</h5>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="p-3 bg-light rounded-2 border">
-                        <h6 class="fw-bold text-dark mb-2">Sứ mệnh: Lan tỏa văn hóa đọc</h6>
-                        <p class="text-secondary small mb-0" style="line-height: 1.7;">
-                            Xóa nhòa khoảng cách tiếp cận tri thức, đưa những cuốn sách có giá trị tư tưởng sâu sắc, hữu ích cho công việc và đời sống đến gần hơn với độc giả cả nước.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="p-3 bg-light rounded-2 border">
-                        <h6 class="fw-bold text-dark mb-2">Tầm nhìn: Điểm hẹn tri thức</h6>
-                        <p class="text-secondary small mb-0" style="line-height: 1.7;">
-                            Xây dựng hệ sinh thái sách trực tuyến minh bạch, tiện lợi và thân thiện. Nơi bạn không chỉ tìm mua sách mà còn tìm thấy cảm hứng phát triển bản thân.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <p>
+            Ra đời trong thời đại số hóa, khi nhịp sống ngày càng trở nên hối hả, BookStore mong muốn tạo nên một điểm hẹn trực tuyến tiện lợi nhưng vẫn giữ trọn được tình yêu đối với những trang sách giấy truyền thống. Tại đây, bạn có thể dễ dàng tìm kiếm từ những tác phẩm văn học kinh điển vượt thời gian, những cuốn sách kinh tế - tư duy đột phá, cho đến các đầu sách công nghệ, kỹ năng sống và sách thiếu nhi ý nghĩa.
+        </p>
 
-        <!-- 3. Cam Kết Chất Lượng -->
-        <section class="mb-4">
-            <h5 class="fw-bold text-dark mb-2">3. Cam Kết Chất Lượng</h5>
-            <ul class="text-secondary ps-3 mb-0" style="line-height: 1.8;">
-                <li class="mb-1"><strong>100% sách chính hãng:</strong> Nhập trực tiếp từ các nhà xuất bản uy tín (NXB Trẻ, Nhã Nam, Kim Đồng, First News...).</li>
-                <li class="mb-1"><strong>Bảo quản &amp; Đóng gói cẩn thận:</strong> Bọc chống sốc kỹ càng, đảm bảo sách nguyên vẹn khi giao đến tay bạn.</li>
-                <li><strong>Hỗ trợ đổi trả:</strong> Đổi trả minh bạch và nhanh chóng nếu sách bị lỗi in ấn từ nhà xuất bản hoặc hư hại trong quá trình vận chuyển.</li>
-            </ul>
-        </section>
+        <h4 class="fw-bold text-dark mt-5 mb-3" style="font-size: 1.35rem;">Sứ Mệnh Của Chúng Tôi</h4>
+        <p>
+            Sứ mệnh của BookStore là <strong>xóa nhòa khoảng cách tiếp cận tri thức</strong>. Dù bạn ở thành phố lớn hay bất kỳ vùng miền nào trên khắp cả nước, những cuốn sách giá trị và chất lượng nhất đều có thể đến tận tay bạn một cách nhanh chóng, trọn vẹn và chu đáo. Chúng tôi không chỉ phân phối sách, mà mong muốn góp phần thắp sáng và lan tỏa văn hóa đọc đến cộng đồng độc giả Việt Nam.
+        </p>
 
-        <!-- 4. Tiện Ích Mua Sắm -->
-        <section>
-            <h5 class="fw-bold text-dark mb-3">4. Tiện Ích Mua Sắm Tại BookStore</h5>
-            <div class="row g-2 text-secondary small" style="line-height: 1.7;">
-                <div class="col-md-6">
-                    • <strong>Tìm kiếm &amp; Bộ lọc:</strong> Dễ dàng tra cứu theo tên sách, tác giả, thể loại và mức giá mong muốn.
-                </div>
-                <div class="col-md-6">
-                    • <strong>Thanh toán đa dạng:</strong> Nhận hàng trả tiền (COD) hoặc quét mã VietQR tự động qua SePay chuẩn xác 100%.
-                </div>
-                <div class="col-md-6">
-                    • <strong>Giao hàng toàn quốc:</strong> Đóng gói cẩn thận và liên kết với các đơn vị vận chuyển uy tín.
-                </div>
-                <div class="col-md-6">
-                    • <strong>Góc bài viết &amp; Tin tức:</strong> Chia sẻ gợi ý tác phẩm hay, trích dẫn ý nghĩa và phương pháp học tập hiệu quả.
-                </div>
-            </div>
-        </section>
+        <h4 class="fw-bold text-dark mt-5 mb-3" style="font-size: 1.35rem;">Cam Kết Với Độc Giả</h4>
+        <p>
+            Đối với BookStore, sự hài lòng và tin tưởng của bạn luôn là ưu tiên hàng đầu. Chúng tôi thực hiện điều đó qua những cam kết rõ ràng:
+        </p>
+        <ul class="ps-4 mb-4" style="line-height: 2;">
+            <li><strong>100% Sách Thật, Bản Quyền Chính Hãng:</strong> Toàn bộ sách được liên kết và nhập trực tiếp từ các nhà xuất bản uy tín hàng đầu như NXB Trẻ, Nhã Nam, Kim Đồng, First News, Alphabooks... Nói không với sách lậu, sách in kém chất lượng.</li>
+            <li><strong>Nâng Niu Từng Cuốn Sách:</strong> Mỗi đơn hàng trước khi gửi đi đều được nhân viên kiểm tra kỹ lưỡng từng góc bìa, bọc chống sốc cẩn thận để sách đến tay bạn luôn trong tình trạng hoàn hảo nhất.</li>
+            <li><strong>Thanh Toán Linh Hoạt &amp; Minh Bạch:</strong> Hỗ trợ đa dạng phương thức từ thanh toán khi nhận hàng (COD) cho đến chuyển khoản VietQR tự động qua SePay xác nhận tức thì, tuyệt đối an toàn.</li>
+            <li><strong>Chính Sách Đổi Trả Thấu Hiểu:</strong> Nếu sách gặp bất kỳ lỗi in ấn hoặc hư hại do vận chuyển, chúng tôi sẵn sàng hỗ trợ đổi mới nhanh chóng và thuận tiện cho bạn.</li>
+        </ul>
+
+        <h4 class="fw-bold text-dark mt-5 mb-3" style="font-size: 1.35rem;">Người Bạn Đồng Hành Cùng Bạn</h4>
+        <p>
+            Bên cạnh việc cung cấp sách, BookStore còn xây dựng chuyên mục <em>Bài viết &amp; Tin tức</em> — nơi ban biên tập cùng độc giả chia sẻ những cảm nhận chân thành về sách hay, những trích dẫn truyền cảm hứng và phương pháp đọc sách hiệu quả mỗi ngày.
+        </p>
+
+        <p class="mt-4 mb-0">
+            Cảm ơn bạn đã ghé thăm và lựa chọn BookStore. Chúc bạn tìm thấy những cuốn sách ưng ý và có những phút giây đọc sách thật nhiều cảm xúc và ý nghĩa!
+        </p>
     </div>
 </div>
