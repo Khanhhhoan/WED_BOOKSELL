@@ -80,7 +80,9 @@
                                             <i class="bi bi-qr-code-scan me-1"></i> Trả ngay
                                         </a>
                                     <?php else : ?>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="alert('Đơn hàng #ORD<?php echo $order['id'] ?>: <?php echo htmlspecialchars($order['shipping_name']) ?> - <?php echo number_format($order['total_amount'], 0, ',', '.') ?> đ');">Xem</button>
+                                        <a href="<?php echo BASE_URL ?>order/success/<?php echo $order['id'] ?>" class="btn btn-sm btn-outline-secondary">
+                                            Xem
+                                        </a>
                                     <?php endif; ?>
                                 </td>
                             </tr>

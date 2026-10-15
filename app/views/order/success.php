@@ -34,7 +34,10 @@
 
                 <p class="mb-4 text-muted">Chúng tôi đã ghi nhận đơn hàng và chuẩn bị đóng gói chuyển đến địa chỉ của bạn. Bạn có thể theo dõi tiến độ xử lý bất kỳ lúc nào.</p>
                 
-                <div class="d-flex gap-3 justify-content-center">
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <?php if (isset($data['payment']) && ($data['payment']['method'] === 'sepay' || $data['payment']['method'] === 'online') && $data['payment']['status'] !== 'success') : ?>
+                        <a href="<?php echo BASE_URL ?>sepay/pay/<?php echo $data['orderId'] ?>" class="btn btn-danger px-4 shadow-sm"><i class="bi bi-qr-code me-1"></i> Quét Mã Thanh Toán</a>
+                    <?php endif; ?>
                     <a href="<?php echo  BASE_URL ?>order/history" class="btn btn-primary px-4 shadow-sm"><i class="bi bi-receipt me-1"></i> Lịch Sử Đơn Hàng</a>
                     <a href="<?php echo  BASE_URL ?>" class="btn btn-outline-secondary px-4 shadow-sm"><i class="bi bi-house me-1"></i> Về Trang Chủ</a>
                 </div>
