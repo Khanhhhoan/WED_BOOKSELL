@@ -18,3 +18,5 @@ services:
         sync: false
       - key: DB_NAME
         value: defaultdb
+      - key: TZ
+        value: Asia/Ho_Chi_Minh
