@@ -976,17 +976,23 @@ class AdminController extends Controller {
 
         if ($tab === 'month') {
             $data = $orderModel->getMonthlyStatistics($year, $statusFilter);
-            $filename = 'thong_ke_don_hang_thang_' . $year . '.csv';
+            $filename = 'thong_ke_doanh_thu_thang_' . $year . '.csv';
         } elseif ($tab === 'quarter') {
             $data = $orderModel->getQuarterlyStatistics($year, $statusFilter);
-            $filename = 'thong_ke_don_hang_quy_' . $year . '.csv';
+            $filename = 'thong_ke_doanh_thu_quy_' . $year . '.csv';
         } else {
             $data = $orderModel->getYearlyStatistics($statusFilter);
-            $filename = 'thong_ke_don_hang_theo_nam.csv';
+            $filename = 'thong_ke_doanh_thu_theo_nam.csv';
         }
 
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=' . $filename);
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        header('Content-Type: text/csv; charset=UTF-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
 
         // Xuất UTF-8 BOM để Excel hiển thị dấu tiếng Việt chuẩn
         echo "\xEF\xBB\xBF";
@@ -994,17 +1000,17 @@ class AdminController extends Controller {
         $output = fopen('php://output', 'w');
 
         // Thông tin tiêu đề
-        fputcsv($output, array('BÁO CÁO THỐNG KÊ ĐƠN HÀNG - BOOKSTORE'));
+        fputcsv($output, array('BÁO CÁO THỐNG KÊ DOANH THU & ĐƠN HÀNG - BOOKSTORE'));
         fputcsv($output, array('Chu kỳ:', ($tab === 'month' ? 'Theo Tháng' : ($tab === 'quarter' ? 'Theo Quý' : 'Theo Năm'))));
         if ($tab !== 'year') {
             fputcsv($output, array('Năm áp dụng:', $year));
         }
-        fputcsv($output, array('Trạng thái đơn:', ($statusFilter === 'completed' ? 'Đã hoàn thành' : ($statusFilter === 'all' ? 'Tất cả đơn' : 'Đơn hợp lệ (trừ hủy)'))));
-        fputcsv($output, array('Thời điểm xuất:', date('d/m/Y H:i:s')));
+        fputcsv($output, array('Trạng thái đơn:', ($statusFilter === 'completed' ? 'Đã hoàn thành' : ($statusFilter === 'all' ? 'Tất cả đơn' : 'Đơn hợp lệ (trừ đơn hủy)'))));
+        fputcsv($output, array('Thời điểm xuất file:', date('d/m/Y H:i:s')));
         fputcsv($output, array(''));
 
-        // Cột
-        $headers = array('STT', 'Thời gian', 'Số đơn hàng', 'Số lượng sản phẩm', 'Tổng thành tiền (VNĐ)', 'Giá trị đơn TB (VNĐ)');
+        // Cột dữ liệu
+        $headers = array('STT', 'Thời gian', 'Số đơn hàng', 'Số sách đã bán (cuốn)', 'Tổng doanh thu (VNĐ)', 'Giá trị đơn TB (VNĐ)');
         if ($tab === 'year') {
             $headers[] = 'Tăng trưởng doanh thu (%)';
         }
@@ -1052,8 +1058,167 @@ class AdminController extends Controller {
         }
         fputcsv($output, $totalLine);
 
+        // Thêm Top 5 Sách Bán Chạy Nhất trong năm
+        $topProducts = $orderModel->getTopSellingProductsByPeriod($tab, $year, $statusFilter, 5);
+        if (!empty($topProducts)) {
+            fputcsv($output, array(''));
+            fputcsv($output, array('TOP 5 SÁCH BÁN CHẠY NHẤT'));
+            fputcsv($output, array('Hạng', 'Tên sách', 'Thể loại', 'Số lượng đã bán (cuốn)', 'Tổng doanh thu (VNĐ)'));
+            $rank = 1;
+            foreach ($topProducts as $bp) {
+                fputcsv($output, array(
+                    $rank++,
+                    $bp['title'],
+                    isset($bp['category_name']) ? $bp['category_name'] : 'Khác',
+                    $bp['total_sold'],
+                    number_format($bp['total_revenue'], 0, ',', '.')
+                ));
+            }
+        }
+
         fclose($output);
         exit;
     }
+
+    /**
+     * Xuất danh sách chi tiết các đơn hàng ra file Excel (CSV UTF-8)
+     */
+    public function export_orders() {
+        $orderModel = $this->model('OrderModel');
+
+        $year = isset($_GET['year']) ? (int)$_GET['year'] : null;
+        if ($year !== null && ($year <= 2000 || $year > 2100)) {
+            $year = null;
+        }
+
+        $statusFilter = isset($_GET['status']) ? trim((string)$_GET['status']) : 'all';
+        if (!in_array($statusFilter, array('valid', 'completed', 'all'))) {
+            $statusFilter = 'all';
+        }
+
+        $orders = $orderModel->getOrdersForExport($year, $statusFilter);
+
+        $filename = 'danh_sach_don_hang';
+        if (!empty($year)) {
+            $filename .= '_' . $year;
+        }
+        $filename .= '_' . date('Ymd_His') . '.csv';
+
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        header('Content-Type: text/csv; charset=UTF-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        echo "\xEF\xBB\xBF"; // UTF-8 BOM
+
+        $output = fopen('php://output', 'w');
+
+        // Tiêu đề báo cáo
+        fputcsv($output, array('DANH SÁCH CHI TIẾT ĐƠN HÀNG - BOOKSTORE'));
+        if (!empty($year)) {
+            fputcsv($output, array('Năm áp dụng:', $year));
+        } else {
+            fputcsv($output, array('Phạm vi:', 'Toàn bộ đơn hàng'));
+        }
+        fputcsv($output, array('Thời điểm xuất file:', date('d/m/Y H:i:s')));
+        fputcsv($output, array('Tổng số đơn hàng:', count($orders)));
+        fputcsv($output, array(''));
+
+        // Cột tiêu đề
+        $headers = array(
+            'STT',
+            'Mã Đơn Hàng',
+            'Ngày Đặt',
+            'Người Nhận',
+            'Số Điện Thoại',
+            'Địa Chỉ Giao Hàng',
+            'Tài Khoản Đặt',
+            'Email',
+            'Danh Sách Sách Mua',
+            'Tổng Số Sách (cuốn)',
+            'Tổng Tiền (VNĐ)',
+            'Hình Thức TT',
+            'Trạng Thái TT',
+            'Mã Giao Dịch TT',
+            'Trạng Thái Đơn Hàng'
+        );
+        fputcsv($output, $headers);
+
+        $stt = 1;
+        $totalAmountSum = 0;
+        $totalBooksSum = 0;
+
+        foreach ($orders as $o) {
+            $pMethod = isset($o['payment_method']) ? strtolower($o['payment_method']) : 'cod';
+            $pMethodLabel = ($pMethod === 'sepay' || $pMethod === 'online') ? 'Chuyển khoản SePay' : 'COD (Tiền mặt)';
+
+            $pStatus = isset($o['payment_status']) ? strtolower($o['payment_status']) : 'pending';
+            $pStatusLabel = ($pStatus === 'success') ? 'Đã thanh toán' : ($pStatus === 'failed' ? 'Thất bại' : 'Chờ thanh toán');
+
+            $oStatus = isset($o['order_status']) ? strtolower($o['order_status']) : 'pending';
+            $oStatusLabel = $oStatus;
+            switch ($oStatus) {
+                case 'pending': $oStatusLabel = 'Chờ xác nhận'; break;
+                case 'confirmed': $oStatusLabel = 'Đã xác nhận'; break;
+                case 'shipping': $oStatusLabel = 'Đang giao hàng'; break;
+                case 'completed': $oStatusLabel = 'Hoàn thành'; break;
+                case 'cancelled': $oStatusLabel = 'Đã hủy'; break;
+            }
+
+            $orderDate = !empty($o['created_at']) ? date('d/m/Y H:i', strtotime($o['created_at'])) : '';
+            $phoneStr = !empty($o['shipping_phone']) ? "'" . $o['shipping_phone'] : '';
+
+            $row = array(
+                $stt++,
+                '#ORD' . $o['id'],
+                $orderDate,
+                $o['shipping_name'],
+                $phoneStr,
+                $o['shipping_address'],
+                $o['user_name'],
+                $o['user_email'],
+                !empty($o['books_summary']) ? $o['books_summary'] : 'Chưa cập nhật',
+                (int)$o['total_quantity'],
+                number_format($o['total_amount'], 0, ',', '.'),
+                $pMethodLabel,
+                $pStatusLabel,
+                !empty($o['payment_transaction_id']) ? $o['payment_transaction_id'] : '-',
+                $oStatusLabel
+            );
+
+            fputcsv($output, $row);
+
+            $totalAmountSum += (float)$o['total_amount'];
+            $totalBooksSum += (int)$o['total_quantity'];
+        }
+
+        // Dòng tổng kết cuối bảng
+        fputcsv($output, array(''));
+        fputcsv($output, array(
+            'TỔNG CỘNG',
+            count($orders) . ' đơn',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            $totalBooksSum . ' cuốn',
+            number_format($totalAmountSum, 0, ',', '.') . ' VNĐ',
+            '',
+            '',
+            '',
+            ''
+        ));
+
+        fclose($output);
+        exit;
+    }
+
 }
 

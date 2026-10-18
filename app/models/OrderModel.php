@@ -111,6 +111,61 @@ class OrderModel extends Model {
         return $this->db->resultSet();
     }
 
+    // [ADMIN] Lấy danh sách đơn hàng xuất Excel (Kèm thông tin chi tiết các cuốn sách đã mua)
+    public function getOrdersForExport($year = null, $statusFilter = 'all') {
+        $where = array();
+        $params = array();
+
+        if (!empty($year)) {
+            $where[] = "YEAR(o.created_at) = :year";
+            $params[':year'] = (int)$year;
+        }
+
+        if ($statusFilter === 'completed') {
+            $where[] = "o.status = 'completed'";
+        } elseif ($statusFilter === 'valid') {
+            $where[] = "o.status != 'cancelled'";
+        }
+
+        $whereClause = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+
+        $sql = "SELECT 
+                    o.id,
+                    o.created_at,
+                    o.shipping_name,
+                    o.shipping_phone,
+                    o.shipping_address,
+                    u.full_name as user_name,
+                    u.email as user_email,
+                    o.total_amount,
+                    o.status as order_status,
+                    p.method as payment_method,
+                    p.status as payment_status,
+                    p.transaction_id as payment_transaction_id,
+                    items.books_summary,
+                    items.total_quantity
+                FROM orders o
+                JOIN users u ON o.user_id = u.id
+                LEFT JOIN payments p ON p.order_id = o.id
+                LEFT JOIN (
+                    SELECT 
+                        oi.order_id,
+                        GROUP_CONCAT(CONCAT(b.title, ' (x', oi.quantity, ')') SEPARATOR '; ') as books_summary,
+                        SUM(oi.quantity) as total_quantity
+                    FROM order_items oi
+                    JOIN books b ON b.id = oi.book_id
+                    GROUP BY oi.order_id
+                ) items ON items.order_id = o.id
+                $whereClause
+                ORDER BY o.created_at DESC";
+
+        $this->db->query($sql);
+        foreach ($params as $k => $v) {
+            $this->db->bind($k, $v);
+        }
+        return $this->db->resultSet();
+    }
+
     // [ADMIN] Lấy chi tiết đơn hàng (Không cần user_id)
     public function getOrderDetailsAdmin($orderId) {
         $this->db->query("SELECT oi.*, b.title, b.image FROM order_items oi 

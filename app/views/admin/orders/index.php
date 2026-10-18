@@ -1,5 +1,8 @@
-<div class="mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
     <h2 class="fw-bold text-dark mb-0">Quản Lý Đơn Hàng</h2>
+    <a href="<?php echo BASE_URL ?>admin/export_orders" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1" title="Tải danh sách đơn hàng ra file Excel">
+        <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+    </a>
 </div>
 
 <div class="card shadow-sm border">

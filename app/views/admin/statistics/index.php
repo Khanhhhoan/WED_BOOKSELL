@@ -30,6 +30,35 @@
                     <?php endforeach; ?>
                 </select>
             </form>
+
+            <!-- Nút Xuất Excel -->
+            <div class="btn-group btn-group-sm">
+                <a href="<?php echo BASE_URL ?>admin/export_statistics?tab=<?php echo $data['tab'] ?>&year=<?php echo $data['year'] ?>" 
+                   class="btn btn-outline-secondary d-flex align-items-center gap-1" title="Tải file Excel báo cáo thống kê">
+                    <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                </a>
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" title="Tùy chọn xuất">
+                    <span class="visually-hidden">Tùy chọn xuất</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border">
+                    <li>
+                        <a class="dropdown-item small py-2" href="<?php echo BASE_URL ?>admin/export_statistics?tab=<?php echo $data['tab'] ?>&year=<?php echo $data['year'] ?>">
+                            <i class="bi bi-bar-chart me-1 text-secondary"></i> Báo cáo thống kê (<?php echo ($data['tab'] === 'quarter') ? 'Theo Quý' : 'Theo Tháng' ?> <?php echo $data['year'] ?>)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item small py-2" href="<?php echo BASE_URL ?>admin/export_orders?year=<?php echo $data['year'] ?>">
+                            <i class="bi bi-list-check me-1 text-secondary"></i> Danh sách đơn hàng (Năm <?php echo $data['year'] ?>)
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider my-1"></li>
+                    <li>
+                        <a class="dropdown-item small py-2" href="<?php echo BASE_URL ?>admin/export_orders">
+                            <i class="bi bi-receipt me-1 text-secondary"></i> Toàn bộ đơn hàng (Tất cả)
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -84,10 +113,13 @@
 
     <!-- Bảng số liệu chi tiết theo Tháng / Quý -->
     <div class="card border rounded-0 shadow-sm mb-4 bg-white">
-        <div class="card-header bg-white py-3 border-bottom">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
             <h6 class="fw-semibold mb-0 text-dark">
                 Bảng Doanh Thu Chi Tiết <?php echo ($data['tab'] === 'quarter') ? 'Theo Quý' : 'Theo Tháng' ?> (Năm <?php echo $data['year'] ?>)
             </h6>
+            <a href="<?php echo BASE_URL ?>admin/export_statistics?tab=<?php echo $data['tab'] ?>&year=<?php echo $data['year'] ?>" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.8rem;" title="Xuất bảng này ra Excel">
+                <i class="bi bi-file-earmark-excel me-1"></i>Xuất Excel
+            </a>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
