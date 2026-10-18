@@ -6,6 +6,27 @@ class AdminController extends Controller {
             Session::flash('error', 'Bạn không có quyền truy cập trang quản trị!');
             $this->redirect('home');
         }
+        $this->ensureSchemaUpdated();
+    }
+
+    /**
+     * Tự động nâng cấp kiểu dữ liệu cột image thành MEDIUMTEXT cho bảng books và posts
+     * Chạy tối đa 1 lần mỗi phiên đăng nhập của admin để tối ưu hiệu năng.
+     */
+    private function ensureSchemaUpdated() {
+        if (!empty($_SESSION['schema_image_text_checked'])) {
+            return;
+        }
+        try {
+            $db = new Database();
+            $db->query("ALTER TABLE books MODIFY COLUMN image MEDIUMTEXT");
+            $db->execute();
+            $db->query("ALTER TABLE posts MODIFY COLUMN image MEDIUMTEXT");
+            $db->execute();
+            $_SESSION['schema_image_text_checked'] = true;
+        } catch (Exception $e) {
+            $_SESSION['schema_image_text_checked'] = true;
+        }
     }
 
     // ==========================================

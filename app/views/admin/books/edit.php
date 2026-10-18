@@ -45,7 +45,7 @@
                 <?php if (!empty($book['image'])) : ?>
                     <div class="mb-2">
                         <img src="<?php echo htmlspecialchars(book_image_url(isset($book['image']) ? $book['image'] : ''), ENT_QUOTES, 'UTF-8'); ?>" alt="" class="rounded border" style="max-height: 180px; max-width: 140px; object-fit: cover;">
-                        <div class="small text-muted mt-1">Ảnh hiện tại: <code><?php echo htmlspecialchars($book['image']); ?></code></div>
+                        <div class="small text-muted mt-1" style="word-break: break-all;">Ảnh hiện tại: <code style="word-break: break-all; max-height: 80px; overflow-y: auto; display: inline-block; max-width: 100%;"><?php echo htmlspecialchars($book['image']); ?></code></div>
                     </div>
                 <?php endif; ?>
                 <input type="file" class="form-control mb-2" name="book_image" accept="image/jpeg,image/png,image/gif,image/webp">

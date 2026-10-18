@@ -223,37 +223,105 @@ class BookModel extends Model {
         return $this->db->single();
     }
 
+    /**
+     * Chuẩn hóa giá trị ảnh bìa:
+     * - Nếu là link online (http://, https://, data:image/) -> giữ nguyên toàn bộ URL.
+     * - Nếu là tên file đĩa/đường dẫn nội bộ -> chỉ lấy tên file an toàn (basename).
+     */
+    private function normalizeBookImage($raw) {
+        $img = isset($raw) ? trim((string) $raw) : '';
+        if ($img === '') {
+            return '';
+        }
+        if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0 || strpos($img, 'data:image/') === 0) {
+            return $img;
+        }
+        return basename(str_replace('\\', '/', $img));
+    }
+
+    private function upgradeBookImageColumn() {
+        try {
+            $this->db->query("ALTER TABLE books MODIFY COLUMN image MEDIUMTEXT");
+            $this->db->execute();
+        } catch (Exception $e) {
+            // Không ngắt nếu quyền hạn chế
+        }
+    }
+
     // [ADMIN] Thêm sách mới
     public function addBook($data) {
         $active = isset($data['is_active']) ? (int) (bool) $data['is_active'] : 1;
-        $this->db->query("INSERT INTO books (title, category_id, author_id, price, description, image, stock, is_active) 
-                          VALUES (:title, :category_id, :author_id, :price, :description, :image, :stock, :is_active)");
+        $imageVal = $this->normalizeBookImage(isset($data['image']) ? $data['image'] : '');
+
+        $sql = "INSERT INTO books (title, category_id, author_id, price, description, image, stock, is_active) 
+                VALUES (:title, :category_id, :author_id, :price, :description, :image, :stock, :is_active)";
+
+        $this->db->query($sql);
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':category_id', $data['category_id']);
         $this->db->bind(':author_id', $data['author_id']);
         $this->db->bind(':price', $data['price']);
         $this->db->bind(':description', $data['description']);
-        $this->db->bind(':image', isset($data['image']) ? trim(basename((string) $data['image'])) : '');
+        $this->db->bind(':image', $imageVal);
         $this->db->bind(':stock', $data['stock']);
         $this->db->bind(':is_active', $active, PDO::PARAM_INT);
-        return $this->db->execute();
+        try {
+            return $this->db->execute();
+        } catch (PDOException $e) {
+            if (strpos($e->getMessage(), '1406') !== false || $e->getCode() == '22001') {
+                $this->upgradeBookImageColumn();
+                $this->db->query($sql);
+                $this->db->bind(':title', $data['title']);
+                $this->db->bind(':category_id', $data['category_id']);
+                $this->db->bind(':author_id', $data['author_id']);
+                $this->db->bind(':price', $data['price']);
+                $this->db->bind(':description', $data['description']);
+                $this->db->bind(':image', $imageVal);
+                $this->db->bind(':stock', $data['stock']);
+                $this->db->bind(':is_active', $active, PDO::PARAM_INT);
+                return $this->db->execute();
+            }
+            throw $e;
+        }
     }
 
     // [ADMIN] Sửa sách
     public function updateBook($data) {
         $active = isset($data['is_active']) ? (int) (bool) $data['is_active'] : 1;
-        $this->db->query("UPDATE books SET title = :title, category_id = :category_id, author_id = :author_id, 
-                          price = :price, description = :description, image = :image, stock = :stock, is_active = :is_active WHERE id = :id");
+        $imageVal = $this->normalizeBookImage(isset($data['image']) ? $data['image'] : '');
+
+        $sql = "UPDATE books SET title = :title, category_id = :category_id, author_id = :author_id, 
+                price = :price, description = :description, image = :image, stock = :stock, is_active = :is_active WHERE id = :id";
+
+        $this->db->query($sql);
         $this->db->bind(':id', $data['id']);
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':category_id', $data['category_id']);
         $this->db->bind(':author_id', $data['author_id']);
         $this->db->bind(':price', $data['price']);
         $this->db->bind(':description', $data['description']);
-        $this->db->bind(':image', isset($data['image']) ? trim(basename((string) $data['image'])) : '');
+        $this->db->bind(':image', $imageVal);
         $this->db->bind(':stock', $data['stock']);
         $this->db->bind(':is_active', $active, PDO::PARAM_INT);
-        return $this->db->execute();
+        try {
+            return $this->db->execute();
+        } catch (PDOException $e) {
+            if (strpos($e->getMessage(), '1406') !== false || $e->getCode() == '22001') {
+                $this->upgradeBookImageColumn();
+                $this->db->query($sql);
+                $this->db->bind(':id', $data['id']);
+                $this->db->bind(':title', $data['title']);
+                $this->db->bind(':category_id', $data['category_id']);
+                $this->db->bind(':author_id', $data['author_id']);
+                $this->db->bind(':price', $data['price']);
+                $this->db->bind(':description', $data['description']);
+                $this->db->bind(':image', $imageVal);
+                $this->db->bind(':stock', $data['stock']);
+                $this->db->bind(':is_active', $active, PDO::PARAM_INT);
+                return $this->db->execute();
+            }
+            throw $e;
+        }
     }
 
     /** Ẩn khỏi cửa hàng (không xóa bản ghi — giữ lịch sử đơn hàng). */

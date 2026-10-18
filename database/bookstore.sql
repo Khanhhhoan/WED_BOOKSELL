@@ -54,7 +54,7 @@ CREATE TABLE `books` (
   `author_id` int(11) default NULL,
   `price` decimal(10,2) NOT NULL,
   `description` text collate utf8_unicode_ci,
-  `image` varchar(255) collate utf8_unicode_ci default NULL,
+  `image` mediumtext collate utf8_unicode_ci default NULL,
   `stock` int(11) default '0',
   `is_active` tinyint(1) NOT NULL default '1',
   `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -246,7 +246,7 @@ CREATE TABLE `posts` (
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `excerpt` text collate utf8_unicode_ci,
   `content` longtext collate utf8_unicode_ci,
-  `image` varchar(255) collate utf8_unicode_ci default NULL,
+  `image` mediumtext collate utf8_unicode_ci default NULL,
   `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

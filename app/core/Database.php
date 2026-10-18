@@ -65,7 +65,22 @@ class Database {
 
     // Thực thi câu lệnh
     public function execute() {
-        return $this->stmt->execute();
+        try {
+            return $this->stmt->execute();
+        } catch (PDOException $e) {
+            // Tự động mở rộng cột image nếu gặp lỗi Data too long cho cột 'image' (SQLSTATE 22001, error 1406)
+            $msg = $e->getMessage();
+            if (($e->getCode() == '22001' || strpos($msg, '1406') !== false) && stripos($msg, "'image'") !== false) {
+                try {
+                    $this->dbh->exec("ALTER TABLE books MODIFY COLUMN image MEDIUMTEXT");
+                    $this->dbh->exec("ALTER TABLE posts MODIFY COLUMN image MEDIUMTEXT");
+                    return $this->stmt->execute();
+                } catch (Exception $ex) {
+                    // Tiếp tục ném exception gốc bên dưới
+                }
+            }
+            throw $e;
+        }
     }
 
     // Lấy nhiều bản ghi (dạng mảng các object hoặc mảng kết hợp)

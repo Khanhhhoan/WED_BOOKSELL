@@ -45,6 +45,10 @@ function book_image_url($filename) {
     if ($fn === '') {
         return 'https://placehold.co/400x600?text=Book+Cover';
     }
+    // Hỗ trợ link ảnh trực tuyến (URL) hoặc data URI
+    if (strpos($fn, 'http://') === 0 || strpos($fn, 'https://') === 0 || strpos($fn, 'data:image/') === 0) {
+        return $fn;
+    }
     $fn = basename(str_replace('\\', '/', $fn));
     $uploadDir = book_image_disk_dir();
     $dir = realpath($uploadDir);
